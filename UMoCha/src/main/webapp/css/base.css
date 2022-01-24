@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+
+header input{
+	width : 500px;
+	height : 40px;
+	font-size : 1.2em;
+}
+
+header div{
+	display : inline-block;
+}
+
+header button{
+	width : 55px;
+	height : 45px;
+}
+
+header{
+	margin : 2% 10% auto;
+}
+
+#logo{
+	position : relative;
+	left : 45px;
+}
+
+#search{
+	position : relative;
+	top : -20px;
+	left : 120px;
+}
+
+#home{
+	position : relative;
+	top : -20px;
+	left : 200px;
+}
+
+.loginB{
+	width : 150px;
+	height : 120px;
+	position : relative;
+	left : 1030px;
+	font-size : 1.5em;
+	background-color : #CCE5FF;
+	border-radius : 10px;
+}
+
+.counseling{
+	width : 120px;
+	height : 60px;
+	border-radius : 7px;
+	background-color : #00CC66;
+	position : relative;
+	top : -140px;
+	left : 650px;
+	text-align : center;
+	line-height : 60px;
+}
+
+.carMaker{
+	width : 120px;
+	height : 60px;
+	border-radius : 7px;
+	background-color : #00CC66;
+	position : relative;
+	top : -80px;
+	left : 300px;
+	text-align : center;
+	line-height : 60px;
+}
+
+.banner1{
+	width : 750px;
+	height : 180px;
+	border : 1px solid black;
+	position : relative;
+	top : -60px;
+	left : 200px;
+	display : inline-block;
+}
+
+.banner2{
+	width : 150px;
+	height : 180px;
+	border : 1px solid black;
+	position : absolute;
+	top : 310px;
+	left : 1035px;
+	display : inline-block;
+}
+
+.banner3{
+	width : 150px;
+	height : 250px;
+	border : 1px solid black;
+	position : absolute;
+	top : 550px;
+	left : 1035px;
+	display : inline-block;
+}
+
+.pCar{
+	position : relative;
+	top : -20px;
+	left : 200px;
+	display : inline-block;
+}
+
+.pCar>table>tbody>tr+tr>td:nth-child(1){
+	width : 120px;
+	height : 100px;
+}
+
+.nCar{
+	position : relative;
+	top : -160px;
+	left : 700px;
+}
+
+.nCar>table>tbody>tr+tr>td:nth-child(1){
+	width : 120px;
+	height : 100px;
+}
