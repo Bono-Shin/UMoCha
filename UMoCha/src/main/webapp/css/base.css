@@ -52,11 +52,9 @@ header{
 	height : 60px;
 	border-radius : 7px;
 	background-color : #00CC66;
-	position : relative;
-	top : -140px;
-	left : 650px;
 	text-align : center;
 	line-height : 60px;
+	display : inline-block;
 }
 
 .carMaker{
@@ -64,11 +62,9 @@ header{
 	height : 60px;
 	border-radius : 7px;
 	background-color : #00CC66;
-	position : relative;
-	top : -80px;
-	left : 300px;
 	text-align : center;
 	line-height : 60px;
+	display : inline-block;
 }
 
 .banner1{

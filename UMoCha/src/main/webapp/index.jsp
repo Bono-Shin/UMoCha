@@ -10,67 +10,59 @@
 <body>
 	<%@ include file = "header.jsp" %>
 	<hr>
-	<div>
-		<button class="loginB">로그인</button>
-	</div>
-	<div class="carMaker">
-		제조사
-	</div>
-	<div class="counseling">
-		상담
-	</div>
-	<div>
-		<table class="banner1">
-			<tr>
-				<td>광고1</td>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<table class="banner2">
-			<tr>
-				<td>광고2</td>
-			</tr>
-		</table>
-	</div>
-	<div>
-		<table class="banner3">
-			<tr>
-				<td>광고3</td>
-			</tr>
-		</table>
-	</div>
-	<div class="pCar">
-		<table border="1">
-			<tbody>
-				<tr>
-					<td colspan="2">인기차량</td>
-				</tr>
-				<tr>
-					<td>사진</td>
-					<td>
-						현대 아반떼<br>
-						출시일
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="nCar">
-		<table border="1">
-			<tbody>
-				<tr>
-					<td colspan="2">신규차량</td>
-				</tr>
-				<tr>
-					<td>사진</td>
-					<td>
-						현대 아반떼<br>
-						출시일
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+	<%@ include file = "aside.jsp" %>
+	<nav>
+		<div class="carMaker">
+			제조사
+		</div>
+		<div class="counseling">
+			상담
+		</div>
+	</nav>
+	<section>
+		<article>
+			<div>
+				<table class="banner1">
+					<tr>
+						<td>광고1</td>
+					</tr>
+				</table>
+			</div>
+		</article>
+		<article>
+			<div class="pCar">
+				<table border="1">
+					<tbody>
+						<tr>
+							<td colspan="2">인기차량</td>
+						</tr>
+						<tr>
+							<td>사진</td>
+							<td>
+								현대 아반떼<br>
+								출시일
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="nCar">
+				<table border="1">
+					<tbody>
+						<tr>
+							<td colspan="2">신규차량</td>
+						</tr>
+						<tr>
+							<td>사진</td>
+							<td>
+								현대 아반떼<br>
+								출시일
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</section>
 </body>
 </html>
