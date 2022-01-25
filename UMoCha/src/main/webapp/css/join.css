@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+article{
+	width : 500px;
+	margin : auto;
+}
+
+form{
+	width : 300px;
+	margin : auto;
+	position : relative;
+	top : 20px;
+}
+
+.in{
+	width : 250px;
+	height : 35px;
+}
+
+form div{
+	margin-bottom : 15px;
+}
+
+.joinSub{
+	width : 258px;
+	height : 41px;
+}

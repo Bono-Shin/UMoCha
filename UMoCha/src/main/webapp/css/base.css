@@ -17,12 +17,12 @@ header button{
 }
 
 header{
-	margin : 2% 10% auto;
+	margin : auto;
+	width : 1000px;
 }
 
-#logo{
-	position : relative;
-	left : 45px;
+#logo:hover{
+	cursor : pointer;
 }
 
 #search{
@@ -40,8 +40,6 @@ header{
 .loginB{
 	width : 150px;
 	height : 120px;
-	position : relative;
-	left : 1030px;
 	font-size : 1.5em;
 	background-color : #CCE5FF;
 	border-radius : 10px;
@@ -55,6 +53,8 @@ header{
 	text-align : center;
 	line-height : 60px;
 	display : inline-block;
+	position : relative;
+	left : 380px;
 }
 
 .carMaker{
@@ -65,42 +65,35 @@ header{
 	text-align : center;
 	line-height : 60px;
 	display : inline-block;
+	position : relative;
+	left : 180px;
 }
 
 .banner1{
-	width : 750px;
+	width : 850px;
 	height : 180px;
 	border : 1px solid black;
-	position : relative;
-	top : -60px;
-	left : 200px;
-	display : inline-block;
 }
 
 .banner2{
 	width : 150px;
 	height : 180px;
 	border : 1px solid black;
-	position : absolute;
-	top : 310px;
-	left : 1035px;
 	display : inline-block;
+	margin-top : 50px;
 }
 
 .banner3{
 	width : 150px;
 	height : 250px;
 	border : 1px solid black;
-	position : absolute;
-	top : 550px;
-	left : 1035px;
 	display : inline-block;
+	margin-top : 50px;
 }
 
 .pCar{
-	position : relative;
-	top : -20px;
-	left : 200px;
+	width : 430px;
+	margin : 0px;
 	display : inline-block;
 }
 
@@ -110,12 +103,58 @@ header{
 }
 
 .nCar{
-	position : relative;
-	top : -160px;
-	left : 700px;
+	width : 430px;
+	margin : 0px;
+	display : inline-block;
 }
 
 .nCar>table>tbody>tr+tr>td:nth-child(1){
 	width : 120px;
 	height : 100px;
+}
+
+aside{
+	position : absolute;
+	left : 900px;
+	top : -100px;
+	display : inline-block;
+}
+
+section{
+	width : 900px;
+	margin : auto;
+	position : relative;
+	right : 50px;
+}
+
+nav{
+	width : 900px;
+	margin : auto;
+	margin-top : 30px;
+	margin-bottom : 30px;
+	position : relative;
+	right : 50px;
+}
+
+.subCM{
+	width : 120px;
+	position : absolute;
+	top : 55px;
+	background-color : #00CC66;
+	display : none;
+	z-index : 1;
+	border-radius : 0px 0px 7px 7px;
+}
+
+.subCM dt{
+	text-align : center;
+}
+
+.carMaker:hover>.subCM{
+	display : block;
+}
+
+.pnCar{
+	position : relative;
+	top : 50px;
 }

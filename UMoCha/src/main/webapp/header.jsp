@@ -3,8 +3,8 @@
 
 
 <header>
-	<div id="logo">
-		<img src="<%=request.getContextPath()%>/image/logo2.png" width="150">
+	<div>
+		<img src="<%=request.getContextPath()%>/image/logo2.png" alt="site logo" width="150" id="logo" onclick="location.href='<%=request.getContextPath()%>/index.jsp'">
 	</div>
 	<div id="search">
 		<label>
@@ -13,8 +13,9 @@
 		</label>
 	</div>
 	<div id="home">
-	<a href="">홈</a>
+	<a href="<%=request.getContextPath()%>/index.jsp">홈</a>
 	|
-	<a href="">회원가입</a>
+	<a href="<%=request.getContextPath()%>/login/join.jsp">회원가입</a>
 	</div>
 </header>
+<hr>

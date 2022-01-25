@@ -4,7 +4,7 @@
     
 <aside>
 	<div>
-		<button class="loginB">로그인</button>
+		<button class="loginB" onclick="location.href='<%=request.getContextPath()%>/login/login.jsp'">로그인</button>
 	</div>
 	<div>
 		<table class="banner2">

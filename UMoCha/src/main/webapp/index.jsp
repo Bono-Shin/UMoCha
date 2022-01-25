@@ -9,17 +9,9 @@
 </head>
 <body>
 	<%@ include file = "header.jsp" %>
-	<hr>
-	<%@ include file = "aside.jsp" %>
-	<nav>
-		<div class="carMaker">
-			제조사
-		</div>
-		<div class="counseling">
-			상담
-		</div>
-	</nav>
+	<%@ include file = "nav.jsp" %>
 	<section>
+		<%@ include file = "aside.jsp" %>
 		<article>
 			<div>
 				<table class="banner1">
@@ -29,7 +21,7 @@
 				</table>
 			</div>
 		</article>
-		<article>
+		<article class="pnCar">
 			<div class="pCar">
 				<table border="1">
 					<tbody>
