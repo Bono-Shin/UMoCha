@@ -18,10 +18,21 @@ form{
 }
 
 form div{
-	margin-bottom : 15px;
+	margin-bottom : 25px;
 }
 
 .joinSub{
 	width : 258px;
 	height : 41px;
 }
+
+span{
+	position : absolute;
+	color : red;
+	font-size : 0.8em;
+}
+
+b{
+	color : red;
+}
+
