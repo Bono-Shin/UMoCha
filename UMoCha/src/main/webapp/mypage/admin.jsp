@@ -30,26 +30,33 @@
 	
 	#adminAt>div:nth-child(1){
 		position : relative;
-		top : 100px;
-		left : 30px;
+		top : 50px;
+		left : 100px;
 	}
 	
 	#adminAt>div:nth-child(2){
 		position : relative;
-		top : 100px;
-		left : 250px;
+		top : 50px;
+		left : 300px;
 	}
 	
 	#adminAt>div:nth-child(3){
 		position : relative;
-		top : 350px;
-		left : -381px;
+		top : 300px;
+		left : -311px;
 	}
 	
 	#adminAt>div:nth-child(4){
 		position : relative;
-		top : 350px;
-		left : -161px;
+		top : 300px;
+		left : -111px;
+	}
+	
+	#adminTit{
+		position : relative;
+		left : 80px;
+		background-color : gray;
+		width : 800px;
 	}
 </style>
 </head>
@@ -59,8 +66,9 @@
 	<%@ include file = "/nav.jsp" %>
 	<section>
 	<%@ include file = "/aside.jsp" %>
+		<article id="adminTit"><div><h2>관리페이지</h2></div></article>
 		<article id="adminAt">
-			<div onclick="#">차량 등록</div>
+			<div onclick="location.href='<%=request.getContextPath()%>/mypage/insertCar.jsp'">차량 등록</div>
 			<div onclick="#">차량 업데이트</div>
 			<div onclick="#">차량 삭제</div>
 			<div onclick="#">회원 관리</div>

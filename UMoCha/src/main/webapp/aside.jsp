@@ -5,7 +5,7 @@
 	Member asidLogin = (Member)session.getAttribute("loginUser");
 %>
     
-<aside>
+<aside id="aside">
 	<div>
 		<%
 			if(asidLogin != null){

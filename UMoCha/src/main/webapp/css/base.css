@@ -184,3 +184,38 @@ aside{
 .loginB>a:hover{
 	cursor : pointer;
 }
+
+/* asideLeft ----------------------------------------------------------------- */
+#asideLeft>div{
+	width : 100px;
+	height : 100px;
+	background-color : #4682B4;
+	border-radius : 20px;
+	line-height : 100px;
+	font-size : 0.8em;
+	text-align : center;
+}
+
+#asideLeft>div:hover{
+	cursor : pointer;	
+}
+
+#asideLeft>div:nth-child(1){
+	position : absolute;
+	top : 80px;
+}
+
+#asideLeft>div:nth-child(2){
+	position : absolute;
+	top : 200px;
+}
+
+#asideLeft>div:nth-child(3){
+	position : absolute;
+	top : 320px;
+}
+
+#asideLeft>div:nth-child(4){
+	position : absolute;
+	top : 440px;
+}
