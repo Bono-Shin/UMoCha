@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-
+/* header -----------------------------------------------------------------*/
 header input{
 	width : 500px;
 	height : 40px;
@@ -37,14 +37,7 @@ header{
 	left : 200px;
 }
 
-.loginB{
-	width : 150px;
-	height : 120px;
-	font-size : 1.5em;
-	background-color : #CCE5FF;
-	border-radius : 10px;
-}
-
+/* nav ----------------------------------------------------------------- */
 .counseling{
 	width : 120px;
 	height : 60px;
@@ -55,76 +48,6 @@ header{
 	display : inline-block;
 	position : relative;
 	left : 380px;
-}
-
-.carMaker{
-	width : 120px;
-	height : 60px;
-	border-radius : 7px;
-	background-color : #00CC66;
-	text-align : center;
-	line-height : 60px;
-	display : inline-block;
-	position : relative;
-	left : 180px;
-}
-
-.banner1{
-	width : 850px;
-	height : 180px;
-	border : 1px solid black;
-}
-
-.banner2{
-	width : 150px;
-	height : 180px;
-	border : 1px solid black;
-	display : inline-block;
-	margin-top : 50px;
-}
-
-.banner3{
-	width : 150px;
-	height : 250px;
-	border : 1px solid black;
-	display : inline-block;
-	margin-top : 50px;
-}
-
-.pCar{
-	width : 430px;
-	margin : 0px;
-	display : inline-block;
-}
-
-.pCar>table>tbody>tr+tr>td:nth-child(1){
-	width : 120px;
-	height : 100px;
-}
-
-.nCar{
-	width : 430px;
-	margin : 0px;
-	display : inline-block;
-}
-
-.nCar>table>tbody>tr+tr>td:nth-child(1){
-	width : 120px;
-	height : 100px;
-}
-
-aside{
-	position : absolute;
-	left : 900px;
-	top : -100px;
-	display : inline-block;
-}
-
-section{
-	width : 900px;
-	margin : auto;
-	position : relative;
-	right : 50px;
 }
 
 nav{
@@ -154,7 +77,110 @@ nav{
 	display : block;
 }
 
+.carMaker{
+	width : 120px;
+	height : 60px;
+	border-radius : 7px;
+	background-color : #00CC66;
+	text-align : center;
+	line-height : 60px;
+	display : inline-block;
+	position : relative;
+	left : 180px;
+}
+
+/* index ----------------------------------------------------------------- */
+section{
+	width : 900px;
+	margin : auto;
+	position : relative;
+	right : 50px;
+}
+
+.banner1{
+	width : 850px;
+	height : 180px;
+	border : 1px solid black;
+}
+
+.pCar{
+	width : 430px;
+	margin : 0px;
+	display : inline-block;
+}
+
+.pCar>table>tbody>tr+tr>td:nth-child(1){
+	width : 120px;
+	height : 100px;
+}
+
+.nCar{
+	width : 430px;
+	margin : 0px;
+	display : inline-block;
+}
+
+.nCar>table>tbody>tr+tr>td:nth-child(1){
+	width : 120px;
+	height : 100px;
+}
+
 .pnCar{
 	position : relative;
 	top : 50px;
+}
+
+/* aside ----------------------------------------------------------------- */
+aside{
+	position : absolute;
+	left : 900px;
+	top : -100px;
+	display : inline-block;
+}
+
+.banner2{
+	width : 150px;
+	height : 180px;
+	border : 1px solid black;
+	display : inline-block;
+	margin-top : 50px;
+}
+
+.banner3{
+	width : 150px;
+	height : 250px;
+	border : 1px solid black;
+	display : inline-block;
+	margin-top : 50px;
+}
+
+.loginB{
+	width : 150px;
+	height : 120px;
+	font-size : 1.5em;
+	background-color : #CCE5FF;
+	border-radius : 10px;
+}
+
+.loginB>div:nth-child(1){
+	font-size : 0.8em;
+	text-align : center;
+	position : relative;
+	top : 10px;
+}
+
+.loginB>div>span:nth-child(1){
+	color : #9400D3;
+}
+
+.loginB>div:nth-child(2){
+	cursor : pointer;
+	font-size : 0.6em;
+	text-align : center;
+	position : relative;
+	top : 20px;
+}
+
+.loginB>a:hover{
+	cursor : pointer;
 }

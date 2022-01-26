@@ -35,3 +35,9 @@ form div{
 .logo:hover{
 	cursor: pointer;
 }
+
+span{
+	position : absolute;
+	font-size : 0.8em;
+	color : red;
+}

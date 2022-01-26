@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ page import = "UMoCha.*" %>
+
+<%
+	Member headerLogin = (Member)session.getAttribute("loginUser");
+%>
 
 <header>
 	<div>
@@ -13,9 +18,29 @@
 		</label>
 	</div>
 	<div id="home">
-	<a href="<%=request.getContextPath()%>/index.jsp">홈</a>
+		<a href="<%=request.getContextPath()%>/index.jsp">홈</a>
 	|
-	<a href="<%=request.getContextPath()%>/login/join.jsp">회원가입</a>
+	<%
+		if(headerLogin != null){
+			if(headerLogin.getType().equals("A")){
+	%>
+				<a href="<%=request.getContextPath()%>/mypage/admin.jsp">마이페이지</a>
+	<%
+			}else if(headerLogin.getType().equals("N")){
+	%>	
+				<a href="">마이페이지</a>
+	<%			
+			}else if(headerLogin.getType().equals("D")){				
+	%>
+				<a href="">마이페이지</a>
+	<%		
+			}
+		}else{
+	%>
+			<a href="<%=request.getContextPath()%>/login/join.jsp">회원가입</a>
+	<%
+		}
+	%>
 	</div>
 </header>
 <hr>
