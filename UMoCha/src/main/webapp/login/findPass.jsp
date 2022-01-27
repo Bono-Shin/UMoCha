@@ -62,7 +62,7 @@
 				<span></span>
 			</div>
 			<div>
-				<input type="submit" value="아이디 찾기" onclick="findSub(); return false;">
+				<input type="submit" value="비밀번호 찾기" onclick="findSub(); return false;">
 			</div>
 		</form>
 	</div>
@@ -124,7 +124,7 @@
 			//패스워드 출력
 			if(result){
 				$.ajax({
-					url : "idF.jsp",
+					url : "passF.jsp",
 					type : "post",
 					data : $("form").serialize(),
 					success : function(data){
@@ -134,7 +134,7 @@
 							var html = "<div><b>"+json[0].id+"</b>의 비밀번호는 <b>"+json[0].pass+"</b>입니다.</div>"
 							$("form").html(html);
 						}else{
-							html = "등록되지 않았거나 입력 정보가 틀렸습니다.";
+							html = "등록되지 않았거나<br>입력 정보가 틀렸습니다.";
 							$("form").html(html);
 						}
 					}

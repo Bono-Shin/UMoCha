@@ -111,7 +111,7 @@
 							var html = "<div><b>"+json[0].name+"</b>님의 아이디는 <b>"+json[0].id+"</b>입니다.</div>"
 							$("form").html(html);
 						}else{
-							html = "등록되지 않았거나 입력 정보가 틀립니다.";
+							html = "등록되지 않았거나<br>입력 정보가 틀립니다.";
 							$("form").html(html);
 						}
 					}
