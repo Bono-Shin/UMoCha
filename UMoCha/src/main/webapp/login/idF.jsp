@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    
 <%@ page import = "java.sql.*" %>
 <%@ page import = "UMoCha.*" %>
+<%@ page import = "org.json.simple.*" %>
 
 <%
 	request.setCharacterEncoding("UTF-8");
 
-	String id = request.getParameter("id");
-	String pass = request.getParameter("pass");
-
+	String name = request.getParameter("name");
+	String phone = request.getParameter("phone");
+	
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
 	String userPass = "1234";
@@ -23,31 +23,26 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from member where id = ? and password = ?";
+		String sql = "select id from member where name = ? and phone = ?";
 		psmt = conn.prepareStatement(sql);
-		psmt.setString(1,id);		
-		psmt.setString(2,pass);		
+		psmt.setString(1,name);		
+		psmt.setString(2,phone);		
 		
 		rs = psmt.executeQuery();
 		
-		Member m = null;
-		
-		while(rs.next()){
-			m = new Member();
-			m.setMidx(rs.getInt("midx"));
-			m.setId(rs.getString("id"));
-			m.setName(rs.getString("name"));
-			m.setType(rs.getString("type"));
+		JSONArray list = new JSONArray();
+		if(rs.next()){
+			JSONObject jobj = new JSONObject();
+			jobj.put("id",rs.getString("id"));
+			jobj.put("name",name);
 			
+			list.add(jobj);
+			out.print(list.toJSONString());
+		}else{
+			out.print(list.toJSONString(null));
 		}
 		
-		if(m != null){
-			session.setAttribute("loginUser",m);
-			response.sendRedirect(request.getContextPath());
-		}else{
-			response.sendRedirect("login.jsp");
-		}
-				
+		
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{

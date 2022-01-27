@@ -51,8 +51,8 @@
 				</div>
 				<div>
 					<label>
-						연락처<b>*</b> ('-' 빼고 입력하세요.)<br>
-						<input type="text" name="phone" maxlength="11" class="in">
+						연락처<b>*</b><br>
+						<input type="text" name="phone" maxlength="11" class="in" placeholder="('-' 빼고 입력하세요.)">
 						<br>
 						<span></span>
 					</label>

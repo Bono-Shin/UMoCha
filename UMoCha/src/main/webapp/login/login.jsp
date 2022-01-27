@@ -35,6 +35,13 @@
 					<input type="submit" value="로그인"  class="joinSub" onclick="login(); return false;">
 				</div>
 			</form>
+				<div id="find">
+					<a onclick="findId()">아이디 찾기</a> 
+					| 
+					<a onclick="findPass()">비밀번호 찾기</a> 
+					| 
+					<a href="<%=request.getContextPath()%>/login/join.jsp">회원가입</a>
+				</div>
 		</article>
 	</section>
 	
@@ -66,6 +73,14 @@
 			if(result){
 				document.frm.submit();
 			}
+		}
+		
+		function findId(){
+			window.open("<%=request.getContextPath()%>/login/findId.jsp","아이디 찾기","width=500px, height=400px, left=750px, top=270px, scrollbars=no, resizable=yes");
+		}
+		
+		function findPass(){
+			window.open("<%=request.getContextPath()%>/login/findPass.jsp","아이디 찾기","width=500px, height=400px, left=750px, top=270px, scrollbars=no, resizable=yes");
 		}
 	</script>
 </body>
