@@ -82,26 +82,126 @@
 	</section>
 	<script>
 	
-		var result = true;
+		var result = false;
+		var resultId = false;
+		var resultPass = false;
+		var resultName = false;
+		
+		//아이디 체크
+		function idInput(){
+			var id = $("input[name='id']").val();
+			
+			$.ajax({
+				url : "check.jsp",
+				type : "post",
+				data : "id="+id,
+				success : function(data){
+					var reg = /^[a-z]+[a-z0-9]{4,19}$/g;
+
+					if(data.trim() == 0){
+						if(reg.test(id)){
+							resultId = true;
+							var html = "사용 가능한 아이디 입니다.";	
+							$("input[name='id']").next().next("span").html(html).css("color","green");
+						}else if(!(reg.test(id))){
+							resultId = false;
+							html = "알파벳 또는 +숫자(5~19자리)";
+							$("input[name='id']").next().next("span").html(html).css("color","red");
+						}
+						
+						if(id == ""){
+							resultId = false;
+							html = "필수 입력 사항";
+							$("input[name='id']").next().next("span").html(html).css("color","red");
+						}
+					}else if(data.trim() == 1){
+						resultId = false;
+						html = "이미 사용중인 아이디 입니다.";
+						$("input[name='id']").next().next("span").html(html).css("color","red");
+					}
+				}
+			});
+		}
+		//비밀번호 체크
+		function passInput(){
+			var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,}$/;
+			var value = $("input[name='pass']").val();
+			
+			if(value == ""){
+				resultPass = false;
+				html = "필수 입력 사항"
+				$("input[name='pass']").next().next("span").html(html).css("color","red");
+			}else if(!(reg.test(value))){
+				resultPass = false;
+				html = "알파벳+숫자+특수문자(최소 4자리)"
+				$("input[name='pass']").next().next("span").html(html).css("color","red");
+			}else if(reg.test(value)){
+				resultPass = true;
+				html = "사용 가능한 비밀번호 입니다."
+				$("input[name='pass']").next().next("span").html(html).css("color","green");
+			}
+		}
+		//이름 체크
+		function nameInput(){
+			var reg = /^[ㄱ-힣]+$/;
+			var value = $("input[name='name']").val();
+			
+			if(value == ""){
+				resultName = false;
+				html = "필수 입력 사항"
+				$("input[name='name']").next().next("span").html(html);
+			}else if(!(reg.test(value))){
+				resultName = false;
+				html = "한글만 사용가능"
+				$("input[name='name']").next().next("span").html(html);
+			}else{
+				resultName = true;
+				$("input[name='name']").next().next("span").html("");
+			}
+		}
 		
 		function submitFn(){
-			//아이디 미입력
+			result = false;
+			//아이디
+			var reg =/^[a-z]+[a-z0-9]{4,19}$/g;
 			var value = $("input[name='id']").val();
 			if(value == ""){
 				result = false;
 				var html = "필수 입력 사항"
 				$("input[name='id']").next().next("span").html(html);
+			}else if(reg.test(value)){
+				result = true;
+				var html = "사용 가능한 아이디 입니다.";	
+				$("input[name='id']").next().next("span").html(html).css("color","green");
+			}else if(!(reg.test(value))){
+				result = false;
+				html = "알파벳 또는 +숫자(5~19자리)";
+				$("input[name='id']").next().next("span").html(html).css("color","red");
 			}
-		
-			//비밀번호 미입력
+			
+			if(!(resultId)){
+				html = "이미 사용중인 아이디 입니다.";
+				$("input[name='id']").next().next("span").html(html).css("color","red");
+			}
+			
+			//비밀번호
+			reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,}$/;
 			value = $("input[name='pass']").val();
 			if(value == ""){
 				result = false;
 				html = "필수 입력 사항"
 				$("input[name='pass']").next().next("span").html(html);
+			}else if(!(reg.test(value))){
+				result = false;
+				html = "알파벳+숫자+특수문자(최소 4자리)"
+				$("input[name='pass']").next().next("span").html(html).css("color","red");
+			}else if(reg.test(value)){
+				result = true;
+				html = "사용 가능한 비밀번호 입니다."
+				$("input[name='pass']").next().next("span").html(html).css("color","green");
 			}
 			
-			//이름 미입력
+			//이름
 			reg = /^[ㄱ-힣]+$/;
 			value = $("input[name='name']").val();
 			
@@ -117,7 +217,7 @@
 				$("input[name='name']").next().next("span").html("");
 			}
 			
-			//주소 미입력
+			//주소
 			value = $("input[name='addr']").val();
 			
 			if(value == ""){
@@ -163,85 +263,10 @@
 				$("input[name='email']").next().next("span").html("");
 			}
 			
-			if(result){
+			if(result && resultId && resultPass && resultName){
 				document.frm.submit();
 			}
-			
 		}
-		
-		//아이디 체크
-		function idInput(){
-			var id = $("input[name='id']").val();
-			
-			$.ajax({
-				url : "check.jsp",
-				type : "post",
-				data : "id="+id,
-				success : function(data){
-					var reg = /^[a-z]+[a-z0-9]{4,19}$/g;
-
-					if(data.trim() == 0){
-						if(reg.test(id)){
-							result = true;
-							var html = "사용 가능한 아이디 입니다.";	
-							$("input[name='id']").next().next("span").html(html).css("color","green");
-						}else if(!(reg.test(id))){
-							result = false;
-							html = "알파벳 또는 +숫자(5~19자리)";
-							$("input[name='id']").next().next("span").html(html).css("color","red");
-						}
-						
-						if(id == ""){
-							result = false;
-							html = "필수 입력 사항";
-							$("input[name='id']").next().next("span").html(html).css("color","red");
-						}
-					}else if(data.trim() == 1){
-						result = false;
-						html = "이미 사용중인 아이디 입니다.";
-						$("input[name='id']").next().next("span").html(html).css("color","red");
-					}
-				}
-			});
-		}
-		//비밀번호 체크
-		function passInput(){
-			var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,}$/;
-			var value = $("input[name='pass']").val();
-			
-			if(value == ""){
-				result = false;
-				html = "필수 입력 사항"
-				$("input[name='pass']").next().next("span").html(html).css("color","red");
-			}else if(!(reg.test(value))){
-				result = false;
-				html = "알파벳+숫자+특수문자(최소 4자리)"
-				$("input[name='pass']").next().next("span").html(html).css("color","red");
-			}else if(reg.test(value)){
-				result = true;
-				html = "사용 가능한 비밀번호 입니다."
-				$("input[name='pass']").next().next("span").html(html).css("color","green");
-			}
-		}
-		//이름 체크
-		function nameInput(){
-			var reg = /^[ㄱ-힣]+$/;
-			var value = $("input[name='name']").val();
-			
-			if(value == ""){
-				result = false;
-				html = "필수 입력 사항"
-				$("input[name='name']").next().next("span").html(html);
-			}else if(!(reg.test(value))){
-				result = false;
-				html = "한글만 사용가능"
-				$("input[name='name']").next().next("span").html(html);
-			}else{
-				result = true;
-				$("input[name='name']").next().next("span").html("");
-			}
-		}
-		
 	</script>
 </body>
 </html>

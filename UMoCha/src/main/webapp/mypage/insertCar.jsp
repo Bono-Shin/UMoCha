@@ -85,7 +85,7 @@
 					~ 
 					<input type="text" name="price2" class="price">만원
 				</div>
-				<div class="allD trimD">
+				<div class="allD trimD0">
 					<!-- n개의 트림이 있음 -->
 					<div class="allD">
 						[트림 이름] <span></span><br>
@@ -93,44 +93,50 @@
 					</div>
 					<div class="allD">
 						[트림 가격] <span></span><br>
-						<input type="text" name="trimPrice">만원
+						<input type="text" name="trimPrice0">만원
 					</div>
 					<div class="allD">
 						[파워트레인] <span></span><br>
-						<textarea name="pt"></textarea><br>
+						<textarea name="pt0"></textarea>
 					</div>
 					<div class="allD">
 						[안전 기술] <span></span><br>
-						<textarea name="Tsafe"></textarea><br>
+						<textarea name="Tsafe0"></textarea>
 					</div>
 					<div class="allD">
 						[안전] <span></span><br>
-						<textarea name="safe"></textarea><br>
+						<textarea name="safe0"></textarea>
 					</div>
 					<div class="allD">
 						[외관] <span></span><br>
-						<textarea name="ext"></textarea><br>
+						<textarea name="ext0"></textarea>
 					</div>
 					<div class="allD">
 						[내장] <span></span><br>
-						<textarea name="inte"></textarea><br>
+						<textarea name="inte0"></textarea>
 					</div>
 					<div class="allD">
 						[시트] <span></span><br>
-						<textarea name="seat"></textarea><br>
+						<textarea name="seat0"></textarea>
 					</div>
 					<div class="allD">
 						[편의] <span></span><br>
-						<textarea name="conve"></textarea><br>
+						<textarea name="conve0"></textarea>
 					</div>
 					<div class="allD">
 						[인포테인먼트] <span></span><br>
-						<textarea name="info"></textarea>
+						<textarea name="info0"></textarea>
 					</div>
-					<div class="allD">
+					<div class="allD optD0-0">
 						<!-- n개의 옵션 -->
 						[차량 옵션] <span></span><br>
-						<textarea name="opt"></textarea>
+						옵션 이름 : <input type="text" name="OName0"><br>
+						옵션 가격 : <input type="text" name="OPrice0">만원<br><br>
+						<내용><br>
+						<textarea name="opt0"></textarea>
+					</div>
+					<div class="allD">
+					<input type="button" value="옵션 추가" onclick="addOpt()">
 					</div>
 				</div>
 				<div class="allD">
@@ -162,65 +168,122 @@
 			var result = true;
 			
 			if(result){
+				optArray[arCnt] = optCnt;
+				console.log("optArray="+optArray);
+				var html = "<input type='hidden' name='optArray' value='"+optArray+"'>";
+				$("form").append(html);
+				
 				document.frm.submit();	
 			}
 			
 		}
 		
 		var trimCnt = 0;
+		var optCnt = 0;
+		var arCnt = 0;
 		
+		var optArray = new Array();
+		
+		//트림 추가
 		function addTrim(){
-				trimCnt += 1;
-			var html = "<div class='allD'>";
-				html += "<div class='allD trimD'>";
+				optArray[arCnt] =  optCnt;
+				arCnt++;
+				optCnt=-1;
+				trimCnt++;
+				optCnt++;
+			var html = "<div class='allD trimD"+trimCnt+"'>";
+				html += "<div class='allD'>";
 				html += "[트림 이름] <span></span><br>";
 				html += "<input type='text' name='trim"+trimCnt+"'>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[트림 가격] <span></span><br>";
-				html += "<input type='text' name='trimPrice'>만원";
+				html += "<input type='text' name='trimPrice"+trimCnt+"'>만원";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[파워트레인] <span></span><br>";
-				html += "<textarea name='pt'></textarea><br>";
+				html += "<textarea name='pt"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[안전 기술] <span></span><br>";
-				html += "<textarea name='Tsafe'></textarea><br>";
+				html += "<textarea name='Tsafe"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[안전] <span></span><br>";
-				html += "<textarea name='safe'></textarea><br>";
+				html += "<textarea name='safe"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[외관] <span></span><br>";
-				html += "<textarea name='ext'></textarea><br>";
+				html += "<textarea name='ext"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[내장] <span></span><br>";
-				html += "<textarea name='inte'></textarea><br>";
+				html += "<textarea name='inte"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[시트] <span></span><br>";
-				html += "<textarea name='seat'></textarea><br>";
+				html += "<textarea name='seat"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[편의] <span></span><br>";
-				html += "<textarea name='conve'></textarea><br>";
+				html += "<textarea name='conve"+trimCnt+"'></textarea><br>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[인포테인먼트] <span></span><br>";
-				html += "<textarea name='info'></textarea>";
+				html += "<textarea name='info"+trimCnt+"'></textarea>";
 				html += "</div>";
-				html += "<div class='allD'>";
+				html += "<div class='allD optD"+trimCnt+"-"+optCnt+"'>";
 				html += "[차량 옵션] <span></span><br>";
-				html += "<textarea name='opt'></textarea>";
+				html += "옵션 이름 : <input type='text' name='OName"+trimCnt+"-"+optCnt+"'><br>";
+				html += "옵션 가격 : <input type='text' name='OPrice"+trimCnt+"-"+optCnt+"'>만원<br><br>";
+				html += "<내용><br>";
+				html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
+				html += "</div><input type='hidden' name='optCnt' value='"+optCnt+"'>";
+				html += "<div class='allD'>";
+				html += "<input type='button' value='옵션 추가' onclick='addOpt()'>";
 				html += "</div>";
+				//트림 추가 개수 정보 저장
 				html += "</div><input type='hidden' name='trimCnt' value='"+trimCnt+"'>";
-				console.log(trimCnt);
+				console.log("trimCnt="+trimCnt);
+				<% 
+					int trimCnt = 0;
+					if(trimCnt == 0){
+				%>
+					$(".trimD"+(trimCnt-1)).append(html);
+				<%
+					trimCnt++;
+					}
+				%>
 				
-				$(".trimD").append(html);	
+				console.log("optCnt="+optCnt);
+				console.log("optArray="+optArray);
 		}
+		
+		
+		//옵션 추가
+		function addOpt(){
+			optCnt++;
+		var html = "<div class='allD optD"+trimCnt+"-"+optCnt+"'>";
+			html += "[차량 옵션] <span></span><br>";
+			html += "옵션 이름 : <input type='text' name='OName"+trimCnt+"-"+optCnt+"'><br>";
+			html += "옵션 가격 : <input type='text' name='OPrice"+trimCnt+"-"+optCnt+"'>만원<br><br>";
+			html += "<내용><br>";
+			html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
+			html += "</div><input type='hidden' name='optCnt' value='"+optCnt+"'>";
+			console.log("optCnt="+optCnt);
+			console.log("optArray="+optArray);
+			
+			<% 
+			int optCnt = 0;
+			if(optCnt == 0){
+			%>
+				$(".optD"+trimCnt+"-"+(optCnt-1)).append(html);
+			<%
+				optCnt++;
+			}
+			%>
+		}
+		
 	</script>
 	<%
 	}else{
