@@ -85,7 +85,7 @@
 					~ 
 					<input type="text" name="price2" class="price">만원
 				</div>
-				<div class="allD trimD0">
+				<div class="allD">
 					<!-- n개의 트림이 있음 -->
 					<div class="allD">
 						[트림 이름] <span></span><br>
@@ -127,20 +127,22 @@
 						[인포테인먼트] <span></span><br>
 						<textarea name="info0"></textarea>
 					</div>
-					<div class="allD optD0-0">
+					<div class="allD">
 						<!-- n개의 옵션 -->
 						[차량 옵션] <span></span><br>
 						옵션 이름 : <input type="text" name="OName0"><br>
 						옵션 가격 : <input type="text" name="OPrice0">만원<br><br>
 						<내용><br>
 						<textarea name="opt0"></textarea>
+						<input type='hidden' name='optCnt' value="0">
 					</div>
 					<div class="allD">
-					<input type="button" value="옵션 추가" onclick="addOpt()">
+						<input type="button" value="옵션 추가" onclick="addOpt(this)">
 					</div>
+					<input type='hidden' name='trimCnt' value="0">
 				</div>
 				<div class="allD">
-					<input type="button" value="트림 추가" onclick="addTrim()">
+					<input type="button" value="트림 추가" onclick="addTrim(this)">
 				</div>
 				<div id="imgD" class="allD">
 					<div class="allD">
@@ -185,13 +187,16 @@
 		var optArray = new Array();
 		
 		//트림 추가
-		function addTrim(){
+		function addTrim(obj){
+				var a = $(obj).parent().prev().find("input:eq(0)");
+				console.log("opt value 값 ="+a);
+			
 				optArray[arCnt] =  optCnt;
 				arCnt++;
 				optCnt=-1;
 				trimCnt++;
 				optCnt++;
-			var html = "<div class='allD trimD"+trimCnt+"'>";
+			var html = "<div class='allD'>";
 				html += "<div class='allD'>";
 				html += "[트림 이름] <span></span><br>";
 				html += "<input type='text' name='trim"+trimCnt+"'>";
@@ -232,56 +237,47 @@
 				html += "[인포테인먼트] <span></span><br>";
 				html += "<textarea name='info"+trimCnt+"'></textarea>";
 				html += "</div>";
-				html += "<div class='allD optD"+trimCnt+"-"+optCnt+"'>";
+				html += "<div class='allD'>";
 				html += "[차량 옵션] <span></span><br>";
 				html += "옵션 이름 : <input type='text' name='OName"+trimCnt+"-"+optCnt+"'><br>";
 				html += "옵션 가격 : <input type='text' name='OPrice"+trimCnt+"-"+optCnt+"'>만원<br><br>";
 				html += "<내용><br>";
 				html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
-				html += "</div><input type='hidden' name='optCnt' value='"+optCnt+"'>";
+				html += "<input type='hidden' name='optCnt' value='"+optCnt+"'>";
+				html += "</div>";
 				html += "<div class='allD'>";
-				html += "<input type='button' value='옵션 추가' onclick='addOpt()'>";
+				html += "<input type='button' value='옵션 추가' onclick='addOpt(this)'>";
 				html += "</div>";
 				//트림 추가 개수 정보 저장
 				html += "</div><input type='hidden' name='trimCnt' value='"+trimCnt+"'>";
 				console.log("trimCnt="+trimCnt);
-				<% 
-					int trimCnt = 0;
-					if(trimCnt == 0){
-				%>
-					$(".trimD"+(trimCnt-1)).append(html);
-				<%
-					trimCnt++;
-					}
-				%>
+			
+				$(obj).parent().prev().append(html);
+				
 				
 				console.log("optCnt="+optCnt);
 				console.log("optArray="+optArray);
+				
+				
 		}
 		
 		
 		//옵션 추가
-		function addOpt(){
+		function addOpt(obj){
 			optCnt++;
-		var html = "<div class='allD optD"+trimCnt+"-"+optCnt+"'>";
+		var html = "<div class='allD'>";
 			html += "[차량 옵션] <span></span><br>";
 			html += "옵션 이름 : <input type='text' name='OName"+trimCnt+"-"+optCnt+"'><br>";
 			html += "옵션 가격 : <input type='text' name='OPrice"+trimCnt+"-"+optCnt+"'>만원<br><br>";
 			html += "<내용><br>";
 			html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
-			html += "</div><input type='hidden' name='optCnt' value='"+optCnt+"'>";
+			html += "<input type='hidden' name='optCnt' value='"+optCnt+"'>";
+			html += "</div>";
 			console.log("optCnt="+optCnt);
 			console.log("optArray="+optArray);
 			
-			<% 
-			int optCnt = 0;
-			if(optCnt == 0){
-			%>
-				$(".optD"+trimCnt+"-"+(optCnt-1)).append(html);
-			<%
-				optCnt++;
-			}
-			%>
+			$(obj).parent().prev().append(html);
+		
 		}
 		
 	</script>

@@ -84,6 +84,7 @@
 	
 		var result = false;
 		var resultId = false;
+		var resultCheck = true;
 		var resultPass = false;
 		var resultName = false;
 		
@@ -101,6 +102,7 @@
 					if(data.trim() == 0){
 						if(reg.test(id)){
 							resultId = true;
+							resultCheck = true;
 							var html = "사용 가능한 아이디 입니다.";	
 							$("input[name='id']").next().next("span").html(html).css("color","green");
 						}else if(!(reg.test(id))){
@@ -115,7 +117,7 @@
 							$("input[name='id']").next().next("span").html(html).css("color","red");
 						}
 					}else if(data.trim() == 1){
-						resultId = false;
+						resultCheck = false;
 						html = "이미 사용중인 아이디 입니다.";
 						$("input[name='id']").next().next("span").html(html).css("color","red");
 					}
@@ -177,9 +179,12 @@
 				result = false;
 				html = "알파벳 또는 +숫자(5~19자리)";
 				$("input[name='id']").next().next("span").html(html).css("color","red");
+			}else{
+				html = "";
+				$("input[name='id']").next().next("span").html(html);
 			}
 			
-			if(!(resultId)){
+			if(!(resultCheck)){
 				html = "이미 사용중인 아이디 입니다.";
 				$("input[name='id']").next().next("span").html(html).css("color","red");
 			}
@@ -263,7 +268,7 @@
 				$("input[name='email']").next().next("span").html("");
 			}
 			
-			if(result && resultId && resultPass && resultName){
+			if(result && resultId && resultCheck && resultPass && resultName){
 				document.frm.submit();
 			}
 		}
