@@ -188,8 +188,6 @@
 		
 		//트림 추가
 		function addTrim(obj){
-				var a = $(obj).parent().prev().find("input:eq(0)");
-				console.log("opt value 값 ="+a);
 			
 				optArray[arCnt] =  optCnt;
 				arCnt++;
