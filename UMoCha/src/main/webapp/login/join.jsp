@@ -10,7 +10,6 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
 	<%@ include file = "/header.jsp" %>
 	<%@ include file = "/nav.jsp" %>
 	<section>
@@ -173,9 +172,14 @@
 				var html = "필수 입력 사항"
 				$("input[name='id']").next().next("span").html(html);
 			}else if(reg.test(value)){
-				result = true;
-				var html = "사용 가능한 아이디 입니다.";	
-				$("input[name='id']").next().next("span").html(html).css("color","green");
+				if(!(resultId)){
+					html = "이미 사용중인 아이디 입니다.";	
+					$("input[name='id']").next().next("span").html(html).css("color","red");
+				}else{
+					result = true;
+					html = "사용 가능한 아이디 입니다.";	
+					$("input[name='id']").next().next("span").html(html).css("color","green");
+				}
 			}else if(!(reg.test(value))){
 				result = false;
 				html = "알파벳 또는 +숫자(5~19자리)";
@@ -183,11 +187,6 @@
 			}else{
 				html = "";
 				$("input[name='id']").next().next("span").html(html);
-			}
-			
-			if(!(resultCheck)){
-				html = "이미 사용중인 아이디 입니다.";
-				$("input[name='id']").next().next("span").html(html).css("color","red");
 			}
 			
 			//비밀번호
