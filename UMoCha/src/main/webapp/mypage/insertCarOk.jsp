@@ -3,16 +3,36 @@
 
 <%@ page import = "java.sql.*" %>
 <%@ page import = "java.util.*" %>
+<!-- MultipartRequest 사용을 위한 import -->
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 
 <%
+	//이미지 받기 위한 준비1
+	String directory = "C:/Users/311/git/UMoCha/UMoCha/src/main/webapp/image"; //저장경로
+	int imgSize = 100*1024*1024; //사이즈
+	String carImg = "";
+	String colorImg = "";
+	String wheelImg = "";
+	
+	//이미지 받기 위한 준비2
+	MultipartRequest multi = new MultipartRequest(request,directory,imgSize,"UTF-8",new DefaultFileRenamePolicy());
+			
+	carImg = multi.getFilesystemName("carImg");
+	colorImg = multi.getFilesystemName("colorImg");
+	wheelImg = multi.getFilesystemName("wheelImg");
+
 	request.setCharacterEncoding("UTF-8");
 	
-	String cmake = request.getParameter("cmake");
-	String cname = request.getParameter("cname");
-	String price1 = request.getParameter("price1");
-	String price2 = request.getParameter("price2");
-	String optArray = request.getParameter("optArray");	
-	String trimCnt = request.getParameter("trimCnt");	
+	String cmake = multi.getParameter("cmake");
+	String cname = multi.getParameter("cname");
+	String price1 = multi.getParameter("price1");
+	String price2 = multi.getParameter("price2");
+	//옵션 개수 배열 변환 된 값 받아오기
+	String optArray = multi.getParameter("optArray");	
+	//트림 개수 받기
+	String trimCnt = multi.getParameter("trimCnt");	
+	//트림이 한 개라면 트림 cnt 0으로 받기
 	if(trimCnt == null){
 		trimCnt = "0";
 	}
@@ -30,6 +50,7 @@
 	String OName = null;
 	String OPrice = null;
 	
+	//트림 n개를 추가하기 위한 ArrayList
 	ArrayList<String> artrim = new ArrayList<>();
 	ArrayList<String> artrimPrice  = new ArrayList<>();
 	ArrayList<String> arpt = new ArrayList<>();
@@ -41,53 +62,57 @@
 	ArrayList<String> arconve = new ArrayList<>();
 	ArrayList<String> arinfo = new ArrayList<>();
 	
+	//트림 이름으로 구분해서 받기
 	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
 		
-		trim = request.getParameter("trim"+i);
+		trim = multi.getParameter("trim"+i);
 		artrim.add(trim);
 		
-		trimPrice = request.getParameter("trimPrice"+i);
+		trimPrice = multi.getParameter("trimPrice"+i);
 		artrimPrice.add(trimPrice);
 		
-		pt = request.getParameter("pt"+i);
+		pt = multi.getParameter("pt"+i);
 		arpt.add(pt);
 		
-		Tsafe = request.getParameter("Tsafe"+i);
+		Tsafe = multi.getParameter("Tsafe"+i);
 		arTsafe.add(Tsafe);
 		
-		safe = request.getParameter("safe"+i);
+		safe = multi.getParameter("safe"+i);
 		arsafe.add(safe);
 		
-		ext = request.getParameter("ext"+i);
+		ext = multi.getParameter("ext"+i);
 		arext.add(ext);
 		
-		inte = request.getParameter("inte"+i);
+		inte = multi.getParameter("inte"+i);
 		arinte.add(inte);
 		
-		seat = request.getParameter("seat"+i);
+		seat = multi.getParameter("seat"+i);
 		arseat.add(seat);
 		
-		conve = request.getParameter("conve"+i);
+		conve = multi.getParameter("conve"+i);
 		arconve.add(conve);
 		
-		info = request.getParameter("info"+i);
+		info = multi.getParameter("info"+i);
 		arinfo.add(info);
 	}
 	
+	//옵션 개수 배열로 받아 온 것 잘라내기
 	String aroptArray[] = optArray.split(",");
+	//옵션 n개를 넣기 위한 ArrayList
 	ArrayList<String> aropt = new ArrayList<>();
 	ArrayList<String> arOName = new ArrayList<>();
 	ArrayList<String> arOPrice = new ArrayList<>();
 	
+	//이름으로 구분해서 옵션 받기
 	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
 		for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
-			opt = request.getParameter("opt"+i+"-"+j);
+			opt = multi.getParameter("opt"+i+"-"+j);
 			aropt.add(opt);
 			
-			OName = request.getParameter("OName"+i+"-"+j);
+			OName = multi.getParameter("OName"+i+"-"+j);
 			arOName.add(OName);
 			
-			OPrice = request.getParameter("OPrice"+i+"-"+j);
+			OPrice = multi.getParameter("OPrice"+i+"-"+j);
 			arOPrice.add(OPrice);
 			
 		}
@@ -102,7 +127,10 @@
 	ResultSet rs = null;
 	int result = 0;
 	
+	
+	
 	try{
+		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
@@ -121,6 +149,7 @@
 		
 		psmt = conn.prepareStatement(sql);
 		
+		//트림 db에 입력
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
 			psmt.setString(1,cname);
 			psmt.setString(2,artrim.get(i));
@@ -140,10 +169,13 @@
 		sql = "insert into opt(CName,OName,opt,OPrice,trim) values(?,?,?,?,?)";
 		
 		psmt = conn.prepareStatement(sql);
-
+		
+		//옵션 개수 카운트
 		int cnt = 0;
+		//while문 빠져나올 키
 		boolean arresult = true;
 		
+		//옵션 db에 입력
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
 			
 			for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
@@ -155,7 +187,7 @@
 			
 				result = psmt.executeUpdate();
 			}
-			
+			//옵션 개수만큼 index(0) 삭제 -> 다음 for문에서 index(0)은 다음 트림의 첫 번째 옵션
 			while(arresult){
 				aropt.remove(0);
 				arOName.remove(0);

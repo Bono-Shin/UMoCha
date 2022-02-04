@@ -67,7 +67,7 @@
 	<%@ include file = "/asideLeft.jsp" %>
 		<article id="insertCarTit"><div><h2>차량 등록</h2></div></article>
 		<article id="insertCarAt">
-			<form action="insertCarOk.jsp" method="post">
+			<form action="insertCarOk.jsp" method="post" enctype="multipart/form-data">
 				<div class="allD">
 					[제조사 선택]<br>
 					<select name="cmake">
@@ -149,16 +149,32 @@
 				</div>
 				<div id="imgD" class="allD">
 					<div class="allD">
-						차량 이미지 삽입 : 
-						<input type="file" name="carImg">
+						[차량 메인 이미지 삽입]<br>
+						<input type="file" name="maincarimg">
 					</div>
 					<div class="allD">
-						차량 색상 삽입 : 
-						<input type="file" name="colorImg">
+						[차량 색상 이미지 삽입]<br>
+						- 색상 이름 : <input type="text" name="carimgsub0"><br>
+						<input type="file" name="carimg0"><br>
+						<input type="button" value="추가" onclick="insertCarimg(this)">
+						<input type="button" value="삭제" onclick="delCarimg(this)">
+						<input type="hidden" name="carimgCnt" value="0">
+					</div>
+					<div class="allD">
+						[카페인트 이미지 삽입]<br>
+						- 카페인트 이름 : <input type="text" name="carpaintsub0"><br>
+						<input type="file" name="carpaint0"><br>
+						<input type="button" value="추가" onclick="insertCarpaint(this)">
+						<input type="button" value="삭제" onclick="delCarpaint(this)">
+						<input type="hidden" name="carpaintCnt" value="0">
 					</div>
 					<div>
-						차량 휠 삽입 : 
-						<input type="file" name="wheelImg">
+						[차량 휠 이미지 삽입]<br>
+						- 휠 이름 : <input type="text" name="wheelname0"><br>
+						<input type="file" name="wheelimg0"><br>
+						<input type="button" value="추가" onclick="insertWheel(this)">
+						<input type="button" value="삭제" onclick="delWheel(this)">
+						<input type="hidden" name="wheelCnt" value="0">
 					</div>
 				</div>
 				<div>
@@ -296,6 +312,23 @@
 			$(obj).parent().prev().find("div:nth-last-child(1)").remove();
 		}
 		
+		var carimgCnt = 0;
+		var carpaintCnt = 0;
+		var wheelCnt = 0;
+		
+		//차량 색상 이미지
+		function insertCarimg(obj){
+			carimgCnt++;
+			var html = "- 색상 이름 : <input type='text' name='carimgsub"+carimgCnt+"'><br>";
+				html += "<input type='file' name='carimg"+carimgCnt+"'><br>";
+			
+				$(obj).before(html);
+		}
+		
+		function delCarimg(obj){
+			carimgCnt--;
+			
+		}
 	</script>
 	<%
 	}else{
