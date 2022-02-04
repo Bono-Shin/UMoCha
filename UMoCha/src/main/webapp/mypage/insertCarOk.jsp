@@ -11,16 +11,56 @@
 	//이미지 받기 위한 준비1
 	String directory = "C:/Users/311/git/UMoCha/UMoCha/src/main/webapp/image"; //저장경로
 	int imgSize = 100*1024*1024; //사이즈
-	String carImg = "";
-	String colorImg = "";
-	String wheelImg = "";
+	
+	String carimgsub ="";
+	String carimg = "";
+	String carpaintsub = "";
+	String carpaint = "";
+	String wheelname = "";
+	String wheelimg = "";
+	String carimgCnt = "";
+	String wheelCnt = "";
+	String maincarimg = "";
 	
 	//이미지 받기 위한 준비2
 	MultipartRequest multi = new MultipartRequest(request,directory,imgSize,"UTF-8",new DefaultFileRenamePolicy());
-			
-	carImg = multi.getFilesystemName("carImg");
-	colorImg = multi.getFilesystemName("colorImg");
-	wheelImg = multi.getFilesystemName("wheelImg");
+	
+	carimgCnt = multi.getParameter("carimgCnt");
+	wheelCnt = multi.getParameter("wheelCnt");
+	
+	ArrayList<String> arcarimgsub = new ArrayList<>();
+	ArrayList<String> arcarimg = new ArrayList<>();
+	ArrayList<String> arcarpaintsub = new ArrayList<>();
+	ArrayList<String> arcarpaint = new ArrayList<>();
+	ArrayList<String> arwheelname = new ArrayList<>();
+	ArrayList<String> arwheelimg = new ArrayList<>();
+	
+	//maincarimg
+	maincarimg = multi.getFilesystemName("maincarimg");
+	
+	//carimg
+	for(int i=0; i<=Integer.parseInt(carimgCnt); i++){
+		carimgsub = multi.getFilesystemName("carimgsub"+i);
+		arcarimgsub.add(carimgsub);
+		
+		carimg = multi.getFilesystemName("carimg"+i);
+		arcarimg.add(carimg);
+		
+		carpaintsub = multi.getFilesystemName("carpaintsub"+i);	
+		arcarpaintsub.add(carpaintsub);
+		
+		carpaint = multi.getFilesystemName("carpaint"+i);
+		arcarpaint.add(carpaint);
+	}
+		
+	//wheel
+	for(int i=0; i<=Integer.parseInt(wheelCnt); i++){
+		wheelname = multi.getFilesystemName("wheelname"+i);
+		arwheelname.add(wheelname);
+		
+		wheelimg = multi.getFilesystemName("wheelimg"+i);
+		arwheelimg.add(wheelimg);
+	}
 
 	request.setCharacterEncoding("UTF-8");
 	
@@ -198,7 +238,41 @@
 				cnt++;
 			}
 		}
-										
+		
+		//이미지 정보 db에 넣기
+		sql = "insert into color(cname,route,maincarimg,carimgsub,carimg,carpaintsub,carpaint) values(?,?,?,?,?,?,?)";
+		
+		psmt = conn.prepareStatement(sql);
+		
+		for(int i=0; i<=Integer.parseInt(carimgCnt); i++){
+			psmt.setString(1,cname);
+			psmt.setString(2,directory);
+			psmt.setString(3,maincarimg);
+			psmt.setString(4,"/"+arcarimgsub.get(i));
+			psmt.setString(5,"/"+arcarimg.get(i));
+			psmt.setString(6,"/"+arcarpaintsub.get(i));
+			psmt.setString(7,"/"+arcarpaint.get(i));
+			
+			result = psmt.executeUpdate();
+		}
+		
+		sql = "insert into wheel(cname,route,wheelname,wheelimg) values(?,?,?,?)";
+		
+		psmt = conn.prepareStatement(sql);
+		
+		for(int i=0; i<=Integer.parseInt(wheelCnt); i++){
+			psmt.setString(1,cname);
+			psmt.setString(2,directory);
+			psmt.setString(3,"/"+arwheelname.get(i));
+			psmt.setString(4,"/"+arwheelimg.get(i));
+			
+			result = psmt.executeUpdate();
+		}
+		
+		if(result > 0){
+			response.sendRedirect("carList.jsp");
+		}
+		
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{

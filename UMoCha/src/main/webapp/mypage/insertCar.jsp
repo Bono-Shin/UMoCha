@@ -154,27 +154,32 @@
 					</div>
 					<div class="allD">
 						[차량 색상 이미지 삽입]<br>
-						- 색상 이름 : <input type="text" name="carimgsub0"><br>
-						<input type="file" name="carimg0"><br>
+						<div>
+							- 색상 이름 : <input type="text" name="carimgsub0"><br>
+							<input type="file" name="carimg0">
+							<input type="hidden" name="carimgCnt" value="0">
+						</div>
 						<input type="button" value="추가" onclick="insertCarimg(this)">
 						<input type="button" value="삭제" onclick="delCarimg(this)">
-						<input type="hidden" name="carimgCnt" value="0">
 					</div>
 					<div class="allD">
 						[카페인트 이미지 삽입]<br>
-						- 카페인트 이름 : <input type="text" name="carpaintsub0"><br>
-						<input type="file" name="carpaint0"><br>
+						<div>
+							- 카페인트 이름 : <input type="text" name="carpaintsub0"><br>
+							<input type="file" name="carpaint0">
+						</div>
 						<input type="button" value="추가" onclick="insertCarpaint(this)">
 						<input type="button" value="삭제" onclick="delCarpaint(this)">
-						<input type="hidden" name="carpaintCnt" value="0">
 					</div>
 					<div>
 						[차량 휠 이미지 삽입]<br>
-						- 휠 이름 : <input type="text" name="wheelname0"><br>
-						<input type="file" name="wheelimg0"><br>
+						<div>
+							- 휠 이름 : <input type="text" name="wheelname0"><br>
+							<input type="file" name="wheelimg0">
+							<input type="hidden" name="wheelCnt" value="0">
+						</div>
 						<input type="button" value="추가" onclick="insertWheel(this)">
 						<input type="button" value="삭제" onclick="delWheel(this)">
-						<input type="hidden" name="wheelCnt" value="0">
 					</div>
 				</div>
 				<div>
@@ -319,16 +324,53 @@
 		//차량 색상 이미지
 		function insertCarimg(obj){
 			carimgCnt++;
-			var html = "- 색상 이름 : <input type='text' name='carimgsub"+carimgCnt+"'><br>";
-				html += "<input type='file' name='carimg"+carimgCnt+"'><br>";
+			var html = "<div>";
+				html += "- 색상 이름 : <input type='text' name='carimgsub"+carimgCnt+"'><br>";
+				html += "<input type='file' name='carimg"+carimgCnt+"'>";
+				html += "<input type='hidden' name='carimgCnt' value="+carimgCnt+">";
+				html += "</div>";
 			
-				$(obj).before(html);
+			$(obj).before(html);
 		}
 		
 		function delCarimg(obj){
 			carimgCnt--;
-			
+			$(obj).prev().prev().remove();
 		}
+		
+		//카페인트
+		function insertCarpaint(obj){
+			carpaintCnt++;
+			var html = "<div>";
+				html += "- 카페인트 이름 : <input type='text' name='carpaintsub"+carpaintCnt+"'><br>";
+				html += "<input type='file' name='carpaint"+carpaintCnt+"'>";
+				html += "</div>";
+			
+			$(obj).before(html);
+		}
+		
+		function delCarpaint(obj){
+			carpaintCnt--;
+			$(obj).prev().prev().remove();
+		}
+		
+		//wheel
+		function insertWheel(obj){
+			wheelCnt++;
+			var html = "<div>";
+				html += "- 휠 이름 : <input type='text' name='wheelname"+wheelCnt+"'><br>";
+				html += "<input type='file' name='wheelimg"+wheelCnt+"'>";
+				html += "<input type='hidden' name='wheelCnt' value="+wheelCnt+">";
+				html += "</div>";
+				
+			$(obj).before(html);
+		}
+		
+		function delWheel(obj){
+			wheelCnt--;
+			$(obj).prev().prev().remove();
+		}
+		
 	</script>
 	<%
 	}else{

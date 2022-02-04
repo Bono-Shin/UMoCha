@@ -69,7 +69,7 @@
 		<article id="adminTit"><div><h2>관리페이지</h2></div></article>
 		<article id="adminAt">
 			<div onclick="location.href='<%=request.getContextPath()%>/mypage/insertCar.jsp'">차량 등록</div>
-			<div onclick="#">차량 업데이트</div>
+			<div onclick="location.href='<%=request.getContextPath()%>/mypage/carList.jsp'">차량 리스트</div>
 			<div onclick="#">차량 삭제</div>
 			<div onclick="#">회원 관리</div>
 		</article>
