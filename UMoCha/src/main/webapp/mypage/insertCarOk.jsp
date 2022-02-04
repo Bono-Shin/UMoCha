@@ -40,11 +40,6 @@
 	ArrayList<String> arseat = new ArrayList<>();
 	ArrayList<String> arconve = new ArrayList<>();
 	ArrayList<String> arinfo = new ArrayList<>();
-	ArrayList<String> aropt = new ArrayList<>();
-	ArrayList<String> arOName = new ArrayList<>();
-	ArrayList<String> arOPrice = new ArrayList<>();
-	
-	String aroptArray[] = optArray.split("-"); //???
 	
 	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
 		
@@ -77,17 +72,27 @@
 		
 		info = request.getParameter("info"+i);
 		arinfo.add(info);
-		
-		opt = request.getParameter("opt"+i);
-		aropt.add(opt);
-		
-		OName = request.getParameter("OName"+i);
-		arOName.add(OName);
-		
-		OPrice = request.getParameter("OPrice"+i);
-		arOPrice.add(OPrice);
 	}
-
+	
+	String aroptArray[] = optArray.split(",");
+	ArrayList<String> aropt = new ArrayList<>();
+	ArrayList<String> arOName = new ArrayList<>();
+	ArrayList<String> arOPrice = new ArrayList<>();
+	
+	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
+		for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
+			opt = request.getParameter("opt"+i+"-"+j);
+			aropt.add(opt);
+			
+			OName = request.getParameter("OName"+i+"-"+j);
+			arOName.add(OName);
+			
+			OPrice = request.getParameter("OPrice"+i+"-"+j);
+			arOPrice.add(OPrice);
+			
+		}
+	}
+	
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
 	String userPass = "1234";
@@ -135,15 +140,31 @@
 		sql = "insert into opt(CName,OName,opt,OPrice,trim) values(?,?,?,?,?)";
 		
 		psmt = conn.prepareStatement(sql);
+
+		int cnt = 0;
+		boolean arresult = true;
 		
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
-			psmt.setString(1,cname);
-			psmt.setString(2,arOName.get(i));
-			psmt.setString(3,aropt.get(i));
-			psmt.setString(4,arOPrice.get(i));
-			psmt.setString(5,artrim.get(i));
 			
-			result = psmt.executeUpdate();
+			for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
+				psmt.setString(1,cname);
+				psmt.setString(2,arOName.get(j));
+				psmt.setString(3,aropt.get(j));
+				psmt.setString(4,arOPrice.get(j));
+				psmt.setString(5,artrim.get(i));
+			
+				result = psmt.executeUpdate();
+			}
+			
+			while(arresult){
+				aropt.remove(0);
+				arOName.remove(0);
+				arOPrice.remove(0);
+				if(cnt == Integer.parseInt(aroptArray[i])){
+					arresult = false;
+				}
+				cnt++;
+			}
 		}
 										
 	}catch(Exception e){
