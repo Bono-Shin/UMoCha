@@ -10,6 +10,7 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+
 	<%@ include file = "/header.jsp" %>
 	<%@ include file = "/nav.jsp" %>
 	<section>
