@@ -71,6 +71,7 @@ nav{
 
 .subCM dt{
 	text-align : center;
+	height : 60px;
 }
 
 .carMaker:hover>.subCM{
@@ -87,6 +88,17 @@ nav{
 	display : inline-block;
 	position : relative;
 	left : 180px;
+}
+
+.txt{
+	font-size : 0.8em;
+	position : relative;
+	top : -50px;
+}
+
+nav a{
+	text-decoration-line : none;
+	color : black;
 }
 
 /* index ----------------------------------------------------------------- */

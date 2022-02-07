@@ -7,10 +7,6 @@
 <% Member insertCarLogin = (Member)session.getAttribute("loginUser"); %>
 
 <%
-	int bidx = 0;
-	String cname = "";
-	String make = "";
-
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
 	String userPass = "1234";
@@ -18,6 +14,8 @@
 	Connection conn = null;
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
+	
+	ArrayList<AdminCar> carList = new ArrayList<>();
 	
 	try{
 		
@@ -31,7 +29,13 @@
 		rs = psmt.executeQuery();
 		
 		while(rs.next()){
+			AdminCar adminCar = new AdminCar();
 			
+			adminCar.setBidx(rs.getString("bidx"));
+			adminCar.setCname(rs.getString("cname"));
+			adminCar.setMake(rs.getString("make"));
+			
+			carList.add(adminCar);
 		}
 		
 
@@ -101,6 +105,27 @@
 		width : 200px;
 		height : 50px;
 	}
+	
+	.t1{
+		border : 1px solid black;
+		border-collapse : collapse;
+		text-align : center;
+		font-size : 1.1em;
+		position : relative;
+		left : 30px;
+		top : 30px;
+	}
+	
+	.t1 th{
+		border : 1px solid black;
+		border-collapse : collapse;
+	}
+	
+	.t1 td{
+		border : 1px solid black;
+		border-collapse : collapse;
+	}
+	
 </style>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
@@ -113,18 +138,22 @@
 	<%@ include file = "/asideLeft.jsp" %>
 		<article id="carListTit"><div><h2>차량 리스트</h2></div></article>
 		<article id="carListAt">
-			<table>
+			<table class="t1">
 				<thead>
 					<tr>
-						<th>No</th>
-						<th>차량 이름</th>
-						<th>제조사</th>
+						<th width="70px" height="30">No</th>
+						<th width="500px" height="30">차량 이름</th>
+						<th width="250px" height="30">제조사</th>
 					</tr>
 				</thead>
 				<tbody>
-					<td></td>
-					<td></td>
-					<td></td>
+					<%for (AdminCar ac : carList){ %>
+					<tr>
+						<td height="50"><%=ac.getBidx() %></td>
+						<td height="50"><%=ac.getCname() %></td>
+						<td height="50"><%=ac.getMake() %></td>
+					</tr>
+					<%} %>
 				</tbody>
 			</table>
 		</article>

@@ -40,13 +40,13 @@
 	
 	//carimg
 	for(int i=0; i<=Integer.parseInt(carimgCnt); i++){
-		carimgsub = multi.getFilesystemName("carimgsub"+i);
+		carimgsub = multi.getParameter("carimgsub"+i);
 		arcarimgsub.add(carimgsub);
 		
 		carimg = multi.getFilesystemName("carimg"+i);
 		arcarimg.add(carimg);
 		
-		carpaintsub = multi.getFilesystemName("carpaintsub"+i);	
+		carpaintsub = multi.getParameter("carpaintsub"+i);	
 		arcarpaintsub.add(carpaintsub);
 		
 		carpaint = multi.getFilesystemName("carpaint"+i);
@@ -55,7 +55,7 @@
 		
 	//wheel
 	for(int i=0; i<=Integer.parseInt(wheelCnt); i++){
-		wheelname = multi.getFilesystemName("wheelname"+i);
+		wheelname = multi.getParameter("wheelname"+i);
 		arwheelname.add(wheelname);
 		
 		wheelimg = multi.getFilesystemName("wheelimg"+i);
@@ -174,7 +174,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "insert into adminCar(make,cname,price1,price2) values(?,?,?,?)";
+		String sql = "insert into adminCar(make,cname,price1,price2,image) values(?,?,?,?)";
 										//make,image,cname,trim,opt,color,price1,price2
 		psmt = conn.prepareStatement(sql);
 		
@@ -182,6 +182,7 @@
 		psmt.setString(2,cname);
 		psmt.setString(3,price1);
 		psmt.setString(4,price2);
+		psmt.setString(5,maincarimg);
 		
 		result = psmt.executeUpdate();
 		
@@ -240,18 +241,17 @@
 		}
 		
 		//이미지 정보 db에 넣기
-		sql = "insert into color(cname,route,maincarimg,carimgsub,carimg,carpaintsub,carpaint) values(?,?,?,?,?,?,?)";
+		sql = "insert into color(cname,route,carimgsub,carimg,carpaintsub,carpaint) values(?,?,?,?,?,?,?)";
 		
 		psmt = conn.prepareStatement(sql);
 		
 		for(int i=0; i<=Integer.parseInt(carimgCnt); i++){
 			psmt.setString(1,cname);
 			psmt.setString(2,directory);
-			psmt.setString(3,maincarimg);
-			psmt.setString(4,"/"+arcarimgsub.get(i));
-			psmt.setString(5,"/"+arcarimg.get(i));
-			psmt.setString(6,"/"+arcarpaintsub.get(i));
-			psmt.setString(7,"/"+arcarpaint.get(i));
+			psmt.setString(3,arcarimgsub.get(i));
+			psmt.setString(4,"/"+arcarimg.get(i));
+			psmt.setString(5,arcarpaintsub.get(i));
+			psmt.setString(6,"/"+arcarpaint.get(i));
 			
 			result = psmt.executeUpdate();
 		}
