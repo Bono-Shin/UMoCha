@@ -46,5 +46,4 @@ public class AdminCar {
 		this.price2 = price2;
 	}
 	
-	
 }

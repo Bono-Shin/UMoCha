@@ -97,7 +97,7 @@
 					<%for(AdminCar ac : carList){ %>
 					<tr>
 						<td><img src="<%=request.getContextPath()%>/image/<%=ac.getImage()%>" alt="<%=ac.getCname()%>" width="200px"></td>
-						<td><%=ac.getCname()%></td>
+						<td><a href="<%=request.getContextPath()%>/car/car<%=ac.getBidx()%>.jsp"><%=ac.getCname()%></a></td>
 						<td><%=ac.getPrice1()%> ~ <%=ac.getPrice2() %>만원</td>
 					</tr>
 					<%} %>
