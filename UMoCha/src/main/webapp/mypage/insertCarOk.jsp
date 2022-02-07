@@ -174,7 +174,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "insert into adminCar(make,cname,price1,price2,image) values(?,?,?,?)";
+		String sql = "insert into adminCar(make,cname,price1,price2,image) values(?,?,?,?,?)";
 										//make,image,cname,trim,opt,color,price1,price2
 		psmt = conn.prepareStatement(sql);
 		
@@ -241,7 +241,7 @@
 		}
 		
 		//이미지 정보 db에 넣기
-		sql = "insert into color(cname,route,carimgsub,carimg,carpaintsub,carpaint) values(?,?,?,?,?,?,?)";
+		sql = "insert into color(cname,route,carimgsub,carimg,carpaintsub,carpaint) values(?,?,?,?,?,?)";
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -263,7 +263,7 @@
 		for(int i=0; i<=Integer.parseInt(wheelCnt); i++){
 			psmt.setString(1,cname);
 			psmt.setString(2,directory);
-			psmt.setString(3,"/"+arwheelname.get(i));
+			psmt.setString(3,arwheelname.get(i));
 			psmt.setString(4,"/"+arwheelimg.get(i));
 			
 			result = psmt.executeUpdate();
