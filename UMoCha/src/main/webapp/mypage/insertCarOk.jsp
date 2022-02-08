@@ -218,7 +218,8 @@
 		
 		//옵션 db에 입력
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
-			
+			arresult = true;
+			cnt = 0;
 			for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
 				psmt.setString(1,cname);
 				psmt.setString(2,arOName.get(j));

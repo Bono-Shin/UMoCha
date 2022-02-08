@@ -6,6 +6,8 @@
 <%@ page import = "java.util.*" %>
 
 <%
+	String bidx_ = request.getParameter("bidx");
+
 	String bidx = "";
 	String cname = "";
 	//rs2
@@ -16,6 +18,24 @@
 	//rs3
 	String wheelname = "";
 	String wheelimg = "";
+	//rs4 - trim
+	String trim = "";
+	String pt = "";
+	String Tsafe = "";
+	String safe = "";
+	String ext = "";
+	String inte = "";
+	String seat = "";
+	String conve = "";
+	String info = "";
+	String TPrice = "";
+	//rs5 - trim 개수 구하기
+	String trimCnt = "";
+	//rs6 - option
+	String opt = "";
+	String oName = "";
+	String oPrice = "";
+	
 	
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
@@ -26,6 +46,9 @@
 	ResultSet rs = null;
 	ResultSet rs2 = null;
 	ResultSet rs3 = null;
+	ResultSet rs4 = null;
+	ResultSet rs5 = null;
+	ResultSet rs6 = null;
 	
 	//rs2
 	ArrayList<String> arcarimgsub = new ArrayList<>();
@@ -35,17 +58,34 @@
 	//rs3
 	ArrayList<String> arwheelname = new ArrayList<>();
 	ArrayList<String> arwheelimg = new ArrayList<>();
-	
-	ArrayList<TO> arTo = new ArrayList<>();
+	//rs4 - trim
+	ArrayList<String> arTrim = new ArrayList<>();
+	ArrayList<String> arPt = new ArrayList<>();
+	ArrayList<String> arTsafe = new ArrayList<>();
+	ArrayList<String> arSafe = new ArrayList<>();
+	ArrayList<String> arExt = new ArrayList<>();
+	ArrayList<String> arInte = new ArrayList<>();
+	ArrayList<String> arSeat = new ArrayList<>();
+	ArrayList<String> arConve = new ArrayList<>();
+	ArrayList<String> arInfo = new ArrayList<>();
+	ArrayList<String> arTPrice = new ArrayList<>();
+	//rs5 - trim 개수
+	ArrayList<String> artrimCnt = new ArrayList<>();
+	//rs6 - option
+	ArrayList<String> arOpt = new ArrayList<>();
+	ArrayList<String> arOName = new ArrayList<>();
+	ArrayList<String> arOPrice = new ArrayList<>();
 	
 	try{
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from adminCar where bidx = 1";
+		String sql = "select * from adminCar where bidx = ?";
 		
 		psmt = conn.prepareStatement(sql);
+		
+		psmt.setString(1,bidx_);
 		
 		rs = psmt.executeQuery();
 		
@@ -54,9 +94,11 @@
 			cname = rs.getString("cname");		
 		}
 		
-		sql = "select * from adminCar a join color c on a.cname=c.cname where a.cname like '%아반떼%'";
+		sql = "select * from adminCar a join color c on a.cname=c.cname where a.cname = ?";
 		
 		psmt = conn.prepareStatement(sql);
+		
+		psmt.setString(1,cname);
 		
 		rs2 = psmt.executeQuery();
 		
@@ -74,9 +116,11 @@
 			arcarpaint.add(carpaint);
 		}
 		
-		sql = "select * from adminCar a, wheel w where a.cname = w.cname and a.cname like '%아반떼%'";
+		sql = "select * from adminCar a, wheel w where a.cname = w.cname and a.cname = ?";
 		
 		psmt = conn.prepareStatement(sql);
+		
+		psmt.setString(1,cname);
 		
 		rs3 = psmt.executeQuery();
 		
@@ -88,6 +132,82 @@
 			arwheelimg.add(wheelimg);
 		}
 
+		sql = "select * from trims where cname = ?";
+		
+		psmt = conn.prepareStatement(sql);
+		
+		psmt.setString(1,cname);
+		
+		rs4 = psmt.executeQuery();
+		
+		while(rs4.next()){
+			trim = rs4.getString("trim");
+			arTrim.add(trim);
+			
+			pt = rs4.getString("pt");
+			arPt.add(pt);
+			
+			Tsafe = rs4.getString("Tsafe");
+			arTsafe.add(Tsafe);
+			
+			safe = rs4.getString("safe");
+			arSafe.add(safe);
+			
+			ext = rs4.getString("ext");
+			arExt.add(ext);
+			
+			inte = rs4.getString("inte");
+			arInte.add(inte);
+			
+			seat = rs4.getString("seat");
+			arSeat.add(seat);
+			
+			conve = rs4.getString("conve");
+			arConve.add(conve);
+			
+			info = rs4.getString("info");
+			arInfo.add(info);
+			
+			TPrice = rs4.getString("TPrice");
+			arTPrice.add(TPrice);
+		}
+		
+		sql = "select count(trim) from opt where trim = ?";
+		
+		for(int i=0; i<arTrim.size(); i++){
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1,arTrim.get(i));
+			
+			rs5 = psmt.executeQuery();
+			
+			if(rs5.next()){				
+				trimCnt = rs5.getString("count(trim)");
+				artrimCnt.add(trimCnt);
+			}
+		}
+		
+		System.out.println(artrimCnt);
+		
+		sql = "select * from opt where cname = ?";
+		
+		psmt = conn.prepareStatement(sql);
+		
+		psmt.setString(1,cname);
+		
+		rs6 = psmt.executeQuery();
+		
+		while(rs6.next()){
+			opt = rs6.getString("opt");
+			arOpt.add(opt);
+			
+			oName = rs6.getString("oName");
+			arOName.add(oName);
+			
+			oPrice = rs6.getString("oPrice");
+			arOPrice.add(oPrice);
+		}
+		
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{
@@ -105,6 +225,15 @@
 		}
 		if(rs3 != null){
 			rs3.close();
+		}
+		if(rs4 != null){
+			rs4.close();
+		}
+		if(rs5 != null){
+			rs4.close();
+		}
+		if(rs6 != null){
+			rs4.close();
 		}
 	}
 %>
@@ -205,6 +334,47 @@
 				}
 			%>
 			</div>
+			<h3>트림 선택</h3>
+			<hr>
+			<div>
+				<%for(int i=0; i<arTrim.size(); i++){ %>
+				<label>
+					<input type="radio" name="trim"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
+				</label>
+				<%} %>
+			</div>
+			<h3>옵션 선택</h3>
+			<hr>
+				<%
+					boolean optResult = true;
+					int optCnt = 0;
+					for(int i=0; i<arTrim.size(); i++){
+						optResult = true;
+						optCnt = 0;
+				%>
+					<div><%=arTrim.get(i) %></div>
+				<%
+						for(int j=0; j<Integer.parseInt(artrimCnt.get(i)); j++){
+				%>
+						<div>
+							<label>
+								<input type="radio" name="opt"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
+							</label>
+						</div>
+				<%
+						}
+						while(optResult){
+							optCnt++;
+							arOpt.remove(0);
+							arOName.remove(0);
+							arOPrice.remove(0);
+								
+							if(optCnt == Integer.parseInt(artrimCnt.get(i))){
+								optResult = false;
+							}
+						}
+					}
+				%>
 		</article>
 	</section>
 	<script>
