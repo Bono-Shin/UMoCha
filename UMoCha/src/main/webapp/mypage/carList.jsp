@@ -150,7 +150,7 @@
 					<%for (AdminCar ac : carList){ %>
 					<tr>
 						<td height="50"><%=ac.getBidx() %></td>
-						<td height="50"><%=ac.getCname() %></td>
+						<td height="50"><a href="<%=request.getContextPath()%>/car/car<%=ac.getBidx()%>.jsp"><%=ac.getCname() %></a></td>
 						<td height="50"><%=ac.getMake() %></td>
 					</tr>
 					<%} %>
