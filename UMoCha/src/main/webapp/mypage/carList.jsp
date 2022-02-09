@@ -22,7 +22,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from adminCar";
+		String sql = "select * from adminCar where delYN = 'n'";
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -144,6 +144,7 @@
 						<th width="70px" height="30">No</th>
 						<th width="500px" height="30">차량 이름</th>
 						<th width="250px" height="30">제조사</th>
+						<th width="250px" height="30">수정/삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -152,11 +153,39 @@
 						<td height="50"><%=ac.getBidx() %></td>
 						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?bidx=<%=ac.getBidx()%>"><%=ac.getCname() %></a></td>
 						<td height="50"><%=ac.getMake() %></td>
+						<td height="50">
+							<input type="button" value="수정" onclick="modify(this)">
+							|
+							<input type="button" value="삭제" onclick="del(this)">
+						</td>
 					</tr>
 					<%} %>
 				</tbody>
 			</table>
 		</article>
+		
+		<script>
+			function modify(obj){
+				
+			}
+			
+			function del(obj){
+				var bidx = $(obj).parent().prev().prev().prev().html();
+				console.log(bidx);
+				
+				if(confirm("정말 삭제 하시겠습니까?")){
+					
+					$.ajax({
+						url : "delCar.jsp",
+						type : "post",
+						data : "bidx="+bidx,
+						success : function(data){
+							
+						}
+					});
+				}
+			}
+		</script>
 	</section>
 
 	<%

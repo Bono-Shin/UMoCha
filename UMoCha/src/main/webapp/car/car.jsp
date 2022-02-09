@@ -337,11 +337,24 @@
 			<h3>트림 선택</h3>
 			<hr>
 			<div>
-				<%for(int i=0; i<arTrim.size(); i++){ %>
-				<label>
-					<input type="radio" name="trim"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
-				</label>
-				<%} %>
+				<%int trimNum = 0; %>
+				<%
+					for(int i=0; i<arTrim.size(); i++){ 
+						if(i == 0){
+				%>
+					<label>
+						<input type="radio" name="trim" value="<%=trimNum++%>" checked onchange="choiceTrim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
+					</label>
+				<%
+						}else{
+				%>
+					<label>
+						<input type="radio" name="trim" value="<%=trimNum++%>" onchange="choiceTrim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
+					</label>
+				<%
+						}
+					} 
+				%>
 			</div>
 			<h3>옵션 선택</h3>
 			<hr>
@@ -352,13 +365,13 @@
 						optResult = true;
 						optCnt = 0;
 				%>
-					<div><%=arTrim.get(i) %></div>
+					<div id="<%=i%>" style="display:none;">
 				<%
 						for(int j=0; j<Integer.parseInt(artrimCnt.get(i)); j++){
 				%>
 						<div>
 							<label>
-								<input type="radio" name="opt"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
+								<input type="checkbox" name="opt"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
 							</label>
 						</div>
 				<%
@@ -373,11 +386,15 @@
 								optResult = false;
 							}
 						}
+				%>
+					</div>
+				<%
 					}
 				%>
 		</article>
 	</section>
 	<script>
+		//색상 선택
 		function colorFn(obj){
 			var value = $(obj).next().next().val();
 			var html = "<img src='<%=request.getContextPath()%>/image/"+value+".jpg' alt='+value+' width='800px'>";
@@ -386,12 +403,37 @@
 			console.log(a);
 		}
 		
+		//휠 선택
 		function wheelFn(obj){
 			var value = $(obj).next().next().val();
 			var html = "<div><img src='<%=request.getContextPath()%>/image/"+value+"' alt='+value+' class='wheelImg fWheel'><div>";
 				html += "<div><img src='<%=request.getContextPath()%>/image/"+value+"' alt='+value+' class='wheelImg rWheel'><div>";
 			$(".wheel").html(html);
 		}
+		
+		//트림별 옵션 출력
+		var trimVal = $("input:radio[name='trim']:checked").val();
+		$("#"+trimVal+"").css("display","block");
+		
+		function choiceTrim(obj){
+			trimVal = $(obj).val();
+			console.log(trimVal);
+			console.log($("#"+trimVal+""));
+			<%
+				for(int i=0; i<arTrim.size(); i++){
+			%>
+					if(<%=i%> == trimVal){
+						$("#"+trimVal+"").css("display","block");
+					}else{
+						$("#"+<%=i%>+"").css("display","none");
+					}
+			<%
+				}
+			%>
+		}
+		
+		//옵션 중복 선택 방지
+	
 	</script>
 </body>
 </html>

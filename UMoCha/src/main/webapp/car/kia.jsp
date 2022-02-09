@@ -21,7 +21,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from adminCar where make = '기아자동차'";
+		String sql = "select * from adminCar where make = '기아자동차' and delYN = 'n'";
 		
 		psmt = conn.prepareStatement(sql);
 		
