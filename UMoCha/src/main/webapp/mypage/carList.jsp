@@ -151,10 +151,10 @@
 					<%for (AdminCar ac : carList){ %>
 					<tr>
 						<td height="50"><%=ac.getBidx() %></td>
-						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?bidx=<%=ac.getBidx()%>"><%=ac.getCname() %></a></td>
+						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?bidx=<%=ac.getBidx()%>"><%=ac.getCname()%></a></td>
 						<td height="50"><%=ac.getMake() %></td>
 						<td height="50">
-							<input type="button" value="수정" onclick="modify(this)">
+							<input type="button" value="수정" onclick="location.href='<%=request.getContextPath()%>/mypage/modifyCar.jsp?cname=<%=ac.getCname()%>'">
 							|
 							<input type="button" value="삭제" onclick="del(this)">
 						</td>
@@ -162,12 +162,10 @@
 					<%} %>
 				</tbody>
 			</table>
-		</article>
-		
+		</article>	
+	</section>
+	
 		<script>
-			function modify(obj){
-				
-			}
 			
 			function del(obj){
 				var bidx = $(obj).parent().prev().prev().prev().html();
@@ -180,13 +178,15 @@
 						type : "post",
 						data : "bidx="+bidx,
 						success : function(data){
-							
+							if(data.trim() > 0){
+								$(obj).parent().parent().remove();
+							}
 						}
 					});
 				}
 			}
+				
 		</script>
-	</section>
 
 	<%
 	}else{

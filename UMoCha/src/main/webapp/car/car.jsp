@@ -230,10 +230,10 @@
 			rs4.close();
 		}
 		if(rs5 != null){
-			rs4.close();
+			rs5.close();
 		}
 		if(rs6 != null){
-			rs4.close();
+			rs6.close();
 		}
 	}
 %>

@@ -26,7 +26,6 @@
 		result = psmt.executeUpdate();
 		
 		if(result > 0){
-			response.sendRedirect("carList.jsp");
 			out.print(result);
 		}
 
