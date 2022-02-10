@@ -216,7 +216,7 @@
 		//트림 추가
 		function addTrim(obj){
 			
-				optArray[arCnt] =  optCnt;
+				optArray[arCnt] = optCnt;
 				arCnt++;
 				optCnt=-1;
 				trimCnt++;
