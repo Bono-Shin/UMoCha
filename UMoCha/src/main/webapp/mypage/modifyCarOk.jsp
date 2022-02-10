@@ -158,7 +158,7 @@
 			
 		}
 		
-		sql = "update opt set opt = ?, OPrice = ? where optno = ? and trim = ?";
+		sql = "update opt set opt = ?, OPrice = ? where trim = ? and optno = ?";
 		
 		psmt = conn.prepareStatement(sql);
 				
@@ -173,14 +173,15 @@
 			for(int j=0; j<Integer.parseInt(aroptArray[i]); j++){
 				psmt.setString(1,aropt.get(j));
 				psmt.setString(2,arOPrice.get(j));
-				psmt.setString(3,aroptno.get(j));
-				psmt.setString(4,artrim.get(i));
+				psmt.setString(3,artrim.get(i));
+				psmt.setString(4,aroptno.get(j));
 				
 				result2 = psmt.executeUpdate();
 			}
 			
 			while(Ono){
 				aroptno.remove(0);
+				aropt.remove(0);
 				
 				if(optnoCnt == (Integer.parseInt(aroptArray[i])-1)){
 					Ono = false;

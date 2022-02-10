@@ -172,12 +172,13 @@
 			arTPrice.add(TPrice);
 		}
 		
-		sql = "select count(trim) from opt where trim = ?";
+		sql = "select count(trim) from opt where trim = ? and cname = ?";
 		
 		for(int i=0; i<arTrim.size(); i++){
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1,arTrim.get(i));
+			psmt.setString(2,cname);
 			
 			rs5 = psmt.executeQuery();
 			
@@ -186,7 +187,7 @@
 				artrimCnt.add(trimCnt);
 			}
 		}
-		
+	
 		System.out.println(artrimCnt);
 		
 		sql = "select * from opt where cname = ?";
@@ -312,7 +313,7 @@
 			<hr>
 			<div>
 			<%
-				for(int i=0; i<arwheelimg.size(); i++){ 
+				for(int i=0; i<arwheelimg.size(); i++){
 					if(i == 0){
 			%>
 				<label>
@@ -339,7 +340,7 @@
 			<div>
 				<%int trimNum = 0; %>
 				<%
-					for(int i=0; i<arTrim.size(); i++){ 
+					for(int i=0; i<arTrim.size(); i++){
 						if(i == 0){
 				%>
 					<label>

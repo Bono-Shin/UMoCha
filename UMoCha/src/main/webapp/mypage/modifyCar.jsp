@@ -131,11 +131,12 @@
 			
 		}
 		
-		sql = "select count(trim) from opt where trim = ?";
+		sql = "select count(trim) from opt where trim = ? and cname = ?";
 		
 		for(int i=0; i<artrim.size(); i++){
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,artrim.get(i));
+			psmt.setString(2,cname);
 			
 			rs3 = psmt.executeQuery();
 			
