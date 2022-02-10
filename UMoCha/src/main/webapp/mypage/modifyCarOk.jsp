@@ -14,12 +14,14 @@
 	String bidx = request.getParameter("bidx");
 	//옵션 개수 배열 변환 된 값 받아오기
 	String optArray = request.getParameter("optArray");	
+
 	//트림 개수 받기
 	String trimCnt = request.getParameter("trimCnt");
 	//트림이 한 개라면 트림 cnt 0으로 받기
 	if(trimCnt == null){
 		trimCnt = "0";
 	}
+	//trim
 	String trim = null;
 	String trimPrice = null;
 	String pt = null;
@@ -30,9 +32,11 @@
 	String seat = null;
 	String conve = null;
 	String info = null;
+	//option
 	String opt = null;
 	String OName = null;
 	String OPrice = null;
+	String optno = null;
 	
 	//트림 n개를 추가하기 위한 ArrayList
 	ArrayList<String> artrim = new ArrayList<>();
@@ -86,10 +90,11 @@
 	ArrayList<String> aropt = new ArrayList<>();
 	ArrayList<String> arOName = new ArrayList<>();
 	ArrayList<String> arOPrice = new ArrayList<>();
+	ArrayList<String> aroptno = new ArrayList<>();
 	
 	//이름으로 구분해서 옵션 받기
 	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
-		for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
+		for(int j=0; j<Integer.parseInt(aroptArray[i]); j++){
 			opt = request.getParameter("opt"+i+"-"+j);
 			aropt.add(opt);
 			
@@ -99,6 +104,9 @@
 			OPrice = request.getParameter("OPrice"+i+"-"+j);
 			arOPrice.add(OPrice);
 			
+			optno = request.getParameter("optno"+i+"-"+j);
+			aroptno.add(optno);
+	
 		}
 	}
 	
@@ -110,7 +118,8 @@
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	int result = 0;
-	
+	int result1 = 0;
+	int result2 = 0;
 	
 	
 	try{
@@ -128,65 +137,64 @@
 		
 		result = psmt.executeUpdate();
 		
-		sql = "update Trims set pt = ?, Tsafe = ?, safe = ?, ext = ?, inte = ?, seat = ?, conve = ?, info = ?, TPrice = ?";
+		sql = "update Trims set pt = ?, Tsafe = ?, safe = ?, ext = ?, inte = ?, seat = ?, conve = ?, info = ?, TPrice = ? where trim = ?";
 		
 		psmt = conn.prepareStatement(sql);
 		
 		//트림 db에 입력
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
-			psmt.setString(1,cname);
-			psmt.setString(2,artrim.get(i));
-			psmt.setString(3,arpt.get(i));
-			psmt.setString(4,arTsafe.get(i));
-			psmt.setString(5,arsafe.get(i));
-			psmt.setString(6,arext.get(i));
-			psmt.setString(7,arinte.get(i));
-			psmt.setString(8,arseat.get(i));
-			psmt.setString(9,arconve.get(i));
-			psmt.setString(10,arinfo.get(i));
-			psmt.setString(11,artrimPrice.get(i));
+			psmt.setString(1,arpt.get(i));
+			psmt.setString(2,arTsafe.get(i));
+			psmt.setString(3,arsafe.get(i));
+			psmt.setString(4,arext.get(i));
+			psmt.setString(5,arinte.get(i));
+			psmt.setString(6,arseat.get(i));
+			psmt.setString(7,arconve.get(i));
+			psmt.setString(8,arinfo.get(i));
+			psmt.setString(9,artrimPrice.get(i));
+			psmt.setString(10,artrim.get(i));
 			
-			result = psmt.executeUpdate();
+			result1 = psmt.executeUpdate();
+			
 		}
 		
-		sql = "insert into opt(CName,OName,opt,OPrice,trim) values(?,?,?,?,?)";
+		sql = "update opt set opt = ?, OPrice = ? where optno = ? and trim = ?";
 		
 		psmt = conn.prepareStatement(sql);
-		
-		//옵션 개수 카운트
-		int cnt = 0;
-		//while문 빠져나올 키
-		boolean arresult = true;
-		
+				
 		//옵션 db에 입력
+		int optnoCnt = 0;
+		boolean Ono = true;
+		
 		for(int i=0; i<=Integer.parseInt(trimCnt); i++){
-			arresult = true;
-			cnt = 0;
-			for(int j=0; j<=Integer.parseInt(aroptArray[i]); j++){
-				psmt.setString(1,cname);
-				psmt.setString(2,arOName.get(j));
-				psmt.setString(3,aropt.get(j));
-				psmt.setString(4,arOPrice.get(j));
-				psmt.setString(5,artrim.get(i));
+			optnoCnt = 0;
+			Ono = true;
 			
-				result = psmt.executeUpdate();
+			for(int j=0; j<Integer.parseInt(aroptArray[i]); j++){
+				psmt.setString(1,aropt.get(j));
+				psmt.setString(2,arOPrice.get(j));
+				psmt.setString(3,aroptno.get(j));
+				psmt.setString(4,artrim.get(i));
+				
+				result2 = psmt.executeUpdate();
 			}
-			//옵션 개수만큼 index(0) 삭제 -> 다음 for문에서 index(0)은 다음 트림의 첫 번째 옵션
-			while(arresult){
-				aropt.remove(0);
-				arOName.remove(0);
-				arOPrice.remove(0);
-				if(cnt == Integer.parseInt(aroptArray[i])){
-					arresult = false;
+			
+			while(Ono){
+				aroptno.remove(0);
+				
+				if(optnoCnt == (Integer.parseInt(aroptArray[i])-1)){
+					Ono = false;
 				}
-				cnt++;
+				
+				optnoCnt++;
 			}
 		}
 		
-		if(result > 0){
-			response.sendRedirect("carList.jsp");
+		/*
+		if(result >0 ||result1 > 0||result2 > 0){
+			response.sendRedirect(request.getContextPath()+"/car/car.jsp?bidx="+bidx);
 		}
-		
+		*/
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{

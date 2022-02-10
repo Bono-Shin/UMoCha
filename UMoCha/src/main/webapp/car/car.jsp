@@ -116,7 +116,7 @@
 			arcarpaint.add(carpaint);
 		}
 		
-		sql = "select * from adminCar a, wheel w where a.cname = w.cname and a.cname = ?";
+		sql = "select * from wheel where cname = ?";
 		
 		psmt = conn.prepareStatement(sql);
 		

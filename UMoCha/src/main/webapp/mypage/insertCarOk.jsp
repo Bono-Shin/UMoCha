@@ -76,6 +76,8 @@
 	if(trimCnt == null){
 		trimCnt = "0";
 	}
+	
+	//trim
 	String trim = null;
 	String trimPrice = null;
 	String pt = null;
@@ -86,9 +88,12 @@
 	String seat = null;
 	String conve = null;
 	String info = null;
+	
+	//option
 	String opt = null;
 	String OName = null;
 	String OPrice = null;
+	String optno = null;
 	
 	//트림 n개를 추가하기 위한 ArrayList
 	ArrayList<String> artrim = new ArrayList<>();
@@ -142,6 +147,7 @@
 	ArrayList<String> aropt = new ArrayList<>();
 	ArrayList<String> arOName = new ArrayList<>();
 	ArrayList<String> arOPrice = new ArrayList<>();
+	ArrayList<String> aroptno = new ArrayList<>();
 	
 	//이름으로 구분해서 옵션 받기
 	for(int i=0; i<=Integer.parseInt(trimCnt); i++){
@@ -154,6 +160,9 @@
 			
 			OPrice = multi.getParameter("OPrice"+i+"-"+j);
 			arOPrice.add(OPrice);
+
+			optno = multi.getParameter("optno"+i+"-"+j);
+			aroptno.add(optno);
 			
 		}
 	}
@@ -207,7 +216,7 @@
 			result = psmt.executeUpdate();
 		}
 		
-		sql = "insert into opt(CName,OName,opt,OPrice,trim) values(?,?,?,?,?)";
+		sql = "insert into opt(CName,OName,opt,OPrice,trim,optno) values(?,?,?,?,?,?)";
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -226,6 +235,7 @@
 				psmt.setString(3,aropt.get(j));
 				psmt.setString(4,arOPrice.get(j));
 				psmt.setString(5,artrim.get(i));
+				psmt.setString(6,aroptno.get(j));
 			
 				result = psmt.executeUpdate();
 			}

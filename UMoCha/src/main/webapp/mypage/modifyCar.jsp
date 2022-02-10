@@ -50,9 +50,11 @@
 	String opt = null;
 	String OName = null;
 	String OPrice = null;
+	String optno = null;
 	ArrayList<String> aropt = new ArrayList<>();
 	ArrayList<String> arOName = new ArrayList<>();
 	ArrayList<String> arOPrice = new ArrayList<>();
+	ArrayList<String> aroptno = new ArrayList<>();
 	
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
@@ -160,6 +162,9 @@
 			
 			OPrice = rs4.getString("OPrice");
 			arOPrice.add(OPrice);
+
+			optno = rs4.getString("optno");
+			aroptno.add(optno);
 		}
 		
 	}catch(Exception e){
@@ -250,7 +255,7 @@
 	<%@ include file = "/asideLeft.jsp" %>
 		<article id="insertCarTit"><div><h2>차량 업데이트</h2></div></article>
 		<article id="insertCarAt">
-			<form action="#" method="post">
+			<form action="modifyCarOk.jsp" method="post">
 				<div class="allD">
 					[제조사]<br>
 					<div id="cmake"><%=make %></div>
@@ -278,7 +283,8 @@
 					<!-- n개의 트림이 있음 -->
 					<div class="allD">
 						[트림 이름] <span></span><br>
-						<input type="text" name="trim<%=i%>" value="<%=artrim.get(i)%>" disabled>
+						<input type="text" value="<%=artrim.get(i)%>" disabled>
+						<input type='hidden' name="trim<%=i%>" value="<%=artrim.get(i)%>">
 					</div>
 					<div class="allD">
 						[트림 가격] <span></span><br>
@@ -325,6 +331,7 @@
 						<내용><br>
 						<textarea name="opt<%=i%>-<%=j%>"><%=aropt.get(j)%>"</textarea>
 						<input type='hidden' name='optCnt' value="<%=j%>">
+						<input type='hidden' name="optno<%=i%>-<%=j%>" value="<%=j%>">
 					</div>
 				</div>
 				<%		
@@ -365,10 +372,10 @@
 			var result = true;
 			var trimCnt = <%=artrim.size()%>-1;
 			var html = "<input type='hidden' name='trimCnt' value='"+trimCnt+"'>";	
-				html = "<input type='hidden' name='optArray' value='"+optArray+"'>";	
-		
+				html += "<input type='hidden' name='optArray' value='"+optArray+"'>";	
+			
 			if(result){
-				$("from").append(html);
+				$("form").append(html);
 				
 				document.frm.submit();	
 			}

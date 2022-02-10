@@ -136,6 +136,7 @@
 						<내용><br>
 						<textarea name="opt0-0"></textarea>
 						<input type='hidden' name='optCnt' value="0">
+						<input type='hidden' name="optno0-0" value="0">
 					</div>
 				</div>
 				<div class="allD">
@@ -226,6 +227,7 @@
 				html += "<div class='allD'>";
 				html += "[트림 이름] <span></span><br>";
 				html += "<input type='text' name='trim"+trimCnt+"'>";
+				html += "<input type='hidden' name='trimno"+trimCnt+"'>";
 				html += "</div>";
 				html += "<div class='allD'>";
 				html += "[트림 가격] <span></span><br>";
@@ -270,6 +272,7 @@
 				html += "<내용><br>";
 				html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
 				html += "<input type='hidden' name='optCnt' value='"+optCnt+"'>";
+				html += "<input type='hidden' name='optno"+trimCnt+"-"+optCnt+"' value='"+optCnt+"'>";
 				html += "</div>";
 				html += "</div>";
 				html += "<div class='allD'>";
@@ -304,6 +307,7 @@
 			html += "<내용><br>";
 			html += "<textarea name='opt"+trimCnt+"-"+optCnt+"'></textarea>";
 			html += "<input type='hidden' name='optCnt' value='"+optCnt+"'>";
+			html += "<input type='hidden' name='optno"+trimCnt+"-"+optCnt+"' value='"+optCnt+"'>";
 			html += "</div>";
 			console.log("optCnt="+optCnt);
 			console.log("optArray="+optArray);
