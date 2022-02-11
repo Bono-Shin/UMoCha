@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import = "java.sql.*" %>
 <%@ page import = "UMoCha.*" %>
+<%@ page import = "java.sql.*" %>
 <%@ page import = "java.util.*" %>
 
 <%
+	request.setCharacterEncoding("UTF-8");
+
+	String cname = request.getParameter("cname");
+
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
 	String user = "root";
 	String userPass = "1234";
@@ -14,14 +18,14 @@
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	
-	ArrayList<AdminCar> carList = new ArrayList<>();
+	ArrayList<AdminCar> searchCar = new ArrayList<>();
 	
 	try{
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from adminCar where make = '기아자동차' and delYN = 'n'";
+		String sql = "select * from adminCar where cname like '%"+cname+"%' and delYN = 'n'";
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -32,14 +36,14 @@
 			
 			adminCar.setBidx(rs.getString("bidx"));
 			adminCar.setCname(rs.getString("cname"));
+			adminCar.setMake(rs.getString("make"));
+			adminCar.setImage(rs.getString("image"));
 			adminCar.setPrice1(rs.getString("price1"));
 			adminCar.setPrice2(rs.getString("price2"));
-			adminCar.setImage(rs.getString("Image"));
 			
-			carList.add(adminCar);
+			searchCar.add(adminCar);
 		}
 		
-
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{
@@ -54,27 +58,24 @@
 		}
 	}
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유모차[당신이 찾는 모든 차]-기아자동차</title>
+<title>유모차[당신이 찾는 모든 차]</title>
 <link href="<%=request.getContextPath()%>/css/base.css" rel="stylesheet">
 <style>
-	.kt1{
-		border : 1px solid black;
-		border-collapse : collapse;
+	.searchT{
 		text-align : center;
-		position : relative;
-		left : 100px;
-		top : 50px;
+		border-collapse : collapse;
 	}
 	
-	.kt1 th{
+	.searchT>tbody>tr td{
 		border : 1px solid black;
 	}
 	
-	.kt1 td{
+	.searchT>thead>tr:not(:first-child)>th{
 		border : 1px solid black;
 	}
 </style>
@@ -85,24 +86,33 @@
 	<section>
 		<%@ include file = "/aside.jsp" %>
 		<article>
-			<table class="kt1">
+		<%if(cname != null && cname != "" && searchCar.size() > 0){ %>
+					<%for (AdminCar ac : searchCar){ %>
+			<table class="searchT">
 				<thead>
 					<tr>
-						<th width="200px">사진</th>
-						<th width="200px">차량명</th>
-						<th	width="200px">차량 가격</th>
+						<th width="500px" height="300px" colspan="3"><img src="<%=request.getContextPath()%>/image/<%=ac.getImage()%>" alt="<%=ac.getCname() %>" width="500px"></th>
+					</tr>
+					<tr>
+						<th width="300px" height="30">차량 이름</th>
+						<th width="250px" height="30">제조사</th>
+						<th width="250px" height="30">가격</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%for(AdminCar ac : carList){ %>
 					<tr>
-						<td><img src="<%=request.getContextPath()%>/image/<%=ac.getImage()%>" alt="<%=ac.getCname()%>" width="200px"></td>
-						<td><a href="<%=request.getContextPath()%>/car/car.jsp?cname=<%=ac.getCname()%>"><%=ac.getCname()%></a></td>
-						<td><%=ac.getPrice1()%> ~ <%=ac.getPrice2() %>만원</td>
+						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?cname=<%=ac.getCname()%>"><%=ac.getCname()%></a></td>
+						<td height="50"><%=ac.getMake() %></td>
+						<td height="50"><%=ac.getPrice1() %> ~ <%=ac.getPrice2() %>만원</td>
 					</tr>
 					<%} %>
 				</tbody>
 			</table>
+		<%}else{ %>
+			<article>
+				<h4>검색 결과가 없습니다.</h4>
+			</article>
+		<%} %>
 		</article>
 	</section>
 </body>

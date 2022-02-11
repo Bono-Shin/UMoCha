@@ -191,11 +191,11 @@
 			}
 		}
 		
-		/*
+		
 		if(result >0 ||result1 > 0||result2 > 0){
 			response.sendRedirect(request.getContextPath()+"/car/car.jsp?bidx="+bidx);
 		}
-		*/
+		
 	}catch(Exception e){
 		e.printStackTrace();
 	}finally{

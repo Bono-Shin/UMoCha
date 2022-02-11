@@ -151,7 +151,7 @@
 					<%for (AdminCar ac : carList){ %>
 					<tr>
 						<td height="50"><%=ac.getBidx() %></td>
-						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?bidx=<%=ac.getBidx()%>"><%=ac.getCname()%></a></td>
+						<td height="50"><a href="<%=request.getContextPath()%>/car/car.jsp?cname=<%=ac.getCname()%>"><%=ac.getCname()%></a></td>
 						<td height="50"><%=ac.getMake() %></td>
 						<td height="50">
 							<input type="button" value="수정" onclick="location.href='<%=request.getContextPath()%>/mypage/modifyCar.jsp?cname=<%=ac.getCname()%>'">

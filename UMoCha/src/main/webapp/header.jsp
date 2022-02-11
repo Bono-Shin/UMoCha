@@ -6,15 +6,14 @@
 <%
 	Member headerLogin = (Member)session.getAttribute("loginUser");
 %>
-
 <header>
 	<div>
 		<img src="<%=request.getContextPath()%>/image/logo2.png" alt="site logo" width="150" id="logo" onclick="location.href='<%=request.getContextPath()%>/index.jsp'">
 	</div>
 	<div id="search">
-		<label>
+		<label id="searchCar">
 			<input type="text" placeholder="차량명을 입력하세요. ex)아반떼">
-			<button>검색</button>
+			<button onclick="search()">검색</button>
 		</label>
 	</div>
 	<div id="home">
@@ -44,3 +43,20 @@
 	</div>
 </header>
 <hr>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
+<script>
+	
+	$("#searchCar").keypress(function (e){
+		if(e.keyCode === 13){
+			search();
+		}
+	});
+
+	function search(){
+		var searchValue = $("#searchCar").find("input").val();
+		
+		if(searchValue != null && searchValue != ""){
+			location.href="<%=request.getContextPath()%>/car/searchCar.jsp?cname="+searchValue
+		}
+	}	
+</script>

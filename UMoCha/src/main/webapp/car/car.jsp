@@ -6,7 +6,7 @@
 <%@ page import = "java.util.*" %>
 
 <%
-	String bidx_ = request.getParameter("bidx");
+	String cname_ = request.getParameter("cname");
 
 	String bidx = "";
 	String cname = "";
@@ -81,11 +81,11 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from adminCar where bidx = ?";
+		String sql = "select * from adminCar where cname = ?";
 		
 		psmt = conn.prepareStatement(sql);
 		
-		psmt.setString(1,bidx_);
+		psmt.setString(1,cname_);
 		
 		rs = psmt.executeQuery();
 		
