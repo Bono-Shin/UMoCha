@@ -27,7 +27,7 @@
 	<%
 			}else if(headerLogin.getType().equals("N")){
 	%>	
-				<a href="">마이페이지</a>
+				<a href="<%=request.getContextPath()%>/mypage/normalUserMypage.jsp">마이페이지</a>
 	<%			
 			}else if(headerLogin.getType().equals("D")){				
 	%>

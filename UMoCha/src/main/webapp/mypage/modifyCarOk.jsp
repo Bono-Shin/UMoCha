@@ -193,7 +193,7 @@
 		
 		
 		if(result >0 ||result1 > 0||result2 > 0){
-			response.sendRedirect(request.getContextPath()+"/car/car.jsp?bidx="+bidx);
+			response.sendRedirect(request.getContextPath()+"/car/car.jsp?cname="+cname);
 		}
 		
 	}catch(Exception e){

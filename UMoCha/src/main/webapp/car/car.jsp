@@ -35,6 +35,8 @@
 	String opt = "";
 	String oName = "";
 	String oPrice = "";
+	//result - hit
+	String hit = "";
 	
 	
 	String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC";
@@ -49,6 +51,7 @@
 	ResultSet rs4 = null;
 	ResultSet rs5 = null;
 	ResultSet rs6 = null;
+	int result = 0;
 	
 	//rs2
 	ArrayList<String> arcarimgsub = new ArrayList<>();
@@ -208,6 +211,12 @@
 			oPrice = rs6.getString("oPrice");
 			arOPrice.add(oPrice);
 		}
+		
+		sql = "update adminCar set hit = hit+1 where cname like '%"+cname+"%'";
+		
+		psmt = conn.prepareStatement(sql);
+		
+		result = psmt.executeUpdate();
 		
 	}catch(Exception e){
 		e.printStackTrace();

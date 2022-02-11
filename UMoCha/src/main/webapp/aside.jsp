@@ -24,16 +24,20 @@
 	</div>
 	<div>
 		<table class="banner2">
-			<tr>
-				<td>광고2</td>
-			</tr>
+			<tbody>
+				<tr>
+					<td>광고2</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	<div>
 		<table class="banner3">
-			<tr>
-				<td>광고3</td>
-			</tr>
+			<tbody>
+				<tr>
+					<td width="149px" height="249px"><a href="https://v-kool.co.kr/"><img src="<%=request.getContextPath()%>/image/틴팅광고.jpg" alt="틴팅광고" width="150px" height="250px"></a></td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 </aside>
