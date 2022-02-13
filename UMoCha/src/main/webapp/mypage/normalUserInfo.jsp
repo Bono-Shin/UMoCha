@@ -54,6 +54,15 @@ try{
 <meta charset="UTF-8">
 <title>유모차[당신이 찾는 모든 차]-마이페이지</title>
 <link href="<%=request.getContextPath()%>/css/base.css" rel="stylesheet">
+<style>
+	#userInfo{
+		margin : auto;
+		width : 500px;
+		position : relative;
+		left : 40px;
+		top : 60px;
+	}
+</style>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -62,33 +71,37 @@ try{
 	<section>
 	<%@ include file = "/aside.jsp" %>
 	<%@ include file = "/userAsideLeft.jsp" %>
-		<div>
-			아이디<br>
-			<div></div>
-		</div>
-		<div>
-			비밀번호<br>
-			<div></div>
-		</div>
-		<div>
-			이름<br>
-			<div></div>
-		</div>
-		<div>
-			주소<br>
-			<div></div>
-		</div>
-		<div>
-			연락처<br>
-			<div></div>
-		</div>
-		<div>
-			E-Mail<br>
-			<div></div>
-		</div>
-		<div>
-			<input type="button" value="정보 수정">
-		</div>
+		<article>
+			<div id="userInfo">
+				<div>
+					아이디<br>
+					<div><%=nUserLogin.getId() %></div>
+				</div>
+				<div>
+					비밀번호<br>
+					<div></div>
+				</div>
+				<div>
+					이름<br>
+					<div><%=nUserLogin.getName() %></div>
+				</div>
+				<div>
+					주소<br>
+					<div><%=nUserLogin.getAddr() %></div>
+				</div>
+				<div>
+					연락처<br>
+					<div><%=nUserLogin.getPhone() %></div>
+				</div>
+				<div>
+					E-Mail<br>
+					<div><%=nUserLogin.getEmail() %></div>
+				</div>
+				<div>
+					<input type="button" value="정보 수정">
+				</div>
+			</div>
+		</article>
 	</section>
 </body>
 </html>
