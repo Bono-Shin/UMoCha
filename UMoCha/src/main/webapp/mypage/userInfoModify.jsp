@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+  
 <%@ page import = "UMoCha.*" %>
 <%@ page import = "java.sql.*" %>
 <%@ page import = "java.util.*" %>
 
 <% Member nUserLogin = (Member)session.getAttribute("loginUser"); %>
-<%if(nUserLogin != null){ %>
+<%if(nUserLogin != null){ %>  
 
 <%
 	int midx = nUserLogin.getMidx();
@@ -68,12 +68,12 @@
 		}
 	}
 %>
-
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유모차[당신이 찾는 모든 차]-마이페이지</title>
+<title>유모차[당신이 찾는 모든 차]-정보 수정</title>
 <link href="<%=request.getContextPath()%>/css/base.css" rel="stylesheet">
 <style>
 	#userInfo{
@@ -106,38 +106,45 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+	<body>
 	<%@ include file = "/header.jsp" %>
 	<%@ include file = "/nav.jsp" %>
 	<section>
 	<%@ include file = "/aside.jsp" %>
 	<%@ include file = "/userAsideLeft.jsp" %>
-		<article>
-			<div id="userInfo">
-				<div class="infoSubD">
-					[아이디]<br>
-					<div class="infoD"><%=arUser.get(0) %></div>
+		<form>
+			<article>
+				<div id="userInfo">
+					<div class="infoSubD">
+						[아이디]<br>
+						<input type="text" name="id" value="<%=arUser.get(0)%>" disabled>
+					</div>
+					<div class="infoSubD">
+						[비밀번호]<br>
+						<input type="password" name="pass">
+					</div>
+					<div class="infoSubD">
+						[이름]<br>
+						<input type="text" name="name" value="<%=arUser.get(1)%>" disabled>
+					</div>
+					<div class="infoSubD">
+						[주소]<br>
+						<input type="text" name="addr" value="<%=arUser.get(2)%>">
+					</div>
+					<div class="infoSubD">
+						[연락처]<br>
+						<input type="text" name="phone" value="<%=arUser.get(3)%>">
+					</div>
+					<div class="infoSubD">
+						[E-Mail]<br>
+						<input type="text" name="email" value="<%=arUser.get(4)%>">
+					</div>
+					<div>
+						<input type="button" value="저장" class="infoModi" onclick="modi(this)">
+					</div>
 				</div>
-				<div class="infoSubD">
-					[이름]<br>
-					<div class="infoD"><%=arUser.get(1) %></div>
-				</div>
-				<div class="infoSubD">
-					[주소]<br>
-					<div class="infoD"><%=arUser.get(2) %></div>
-				</div>
-				<div class="infoSubD">
-					[연락처]<br>
-					<div class="infoD"><%=arUser.get(3) %></div>
-				</div>
-				<div class="infoSubD">
-					[E-Mail]<br>
-					<div class="infoD"><%=arUser.get(4) %></div>
-				</div>
-				<div>
-					<input type="button" value="수정" class="infoModi" onclick="modi(this)">
-				</div>
-			</div>
-		</article>
+			</article>
+		</form>
 	</section>
 	<script>
 		function modi(obj){
@@ -146,6 +153,7 @@
 	</script>
 </body>
 </html>
+
 <%}else{
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }

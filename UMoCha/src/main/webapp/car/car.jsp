@@ -264,18 +264,6 @@
 		width : 101px;
 	}
 	
-	.fWheel{
-		position : absolute;
-		top : 239px;
-		left : 119px;
-	}
-	
-	.rWheel{
-		position : absolute;
-		top : 239px;
-		left : 548px;
-	}
-	
 	h2{
 		position : absolute;
 	}
@@ -293,7 +281,8 @@
 			<h3>색상 선택</h3>
 			<hr>
 			<div>
-			<%for(int i=0; i<arcarpaint.size(); i++){ 
+			<%for(int i=0; i<arcarpaint.size(); i++){ %>
+			<%
 				if(i == 0){
 			%>
 				<label>
@@ -381,7 +370,7 @@
 				%>
 						<div>
 							<label>
-								<input type="checkbox" name="opt"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
+								<input type="checkbox" name="opt<%=j %>" onchange="optCheck(this)"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
 							</label>
 						</div>
 				<%
@@ -419,6 +408,34 @@
 			var html = "<div><img src='<%=request.getContextPath()%>/image/"+value+"' alt='+value+' class='wheelImg fWheel'><div>";
 				html += "<div><img src='<%=request.getContextPath()%>/image/"+value+"' alt='+value+' class='wheelImg rWheel'><div>";
 			$(".wheel").html(html);
+			
+			var bidx = <%=bidx%>;
+			
+			if(bidx == 1){
+				$(".fWheel").css({
+					"position" : "absolute",
+					"top" : "239px",
+					"left" : "119px"
+				});
+					
+				$(".rWheel").css({
+					"position" : "absolute",
+					"top" : "239px",
+					"left" : "548px"
+				});
+			}else if(bidx == 2){
+				$(".fWheel").css({
+					"position" : "absolute",
+					"top" : "195px",
+					"left" : "118px"
+				});
+					
+				$(".rWheel").css({
+					"position" : "absolute",
+					"top" : "195px",
+					"left" : "520px"
+				});
+			}
 		}
 		
 		//트림별 옵션 출력
@@ -442,8 +459,55 @@
 			%>
 		}
 		
+		var oCheck2 = $("input[name='opt2']").is(":checked");
+		var oCheck4 = $("input[name='opt4']").is(":checked");
 		//옵션 중복 선택 방지
+		function optCheck(obj){
+			var bidx = <%=bidx%>;
+			var tCheck = $("input[name='trim']:checked").val();
+			
+			if(bidx == 1 && tCheck == 0){
+				
+			}
+			oCheck2 = $("input[name='opt2']").is(":checked");
+			oCheck4 = $("input[name='opt4']").is(":checked");
+			console.log(oCheck2);
+			console.log(oCheck4);
+		}
+		
 	
+		
 	</script>
+	<script>
+
+	var bidx = <%=bidx%>;
+		
+	if(bidx == 1){
+		$(".fWheel").css({
+			"position" : "absolute",
+			"top" : "239px",
+			"left" : "119px"
+		});
+			
+		$(".rWheel").css({
+			"position" : "absolute",
+			"top" : "239px",
+			"left" : "548px"
+		});
+	}else if(bidx == 2){
+		$(".fWheel").css({
+			"position" : "absolute",
+			"top" : "195px",
+			"left" : "118px"
+		});
+			
+		$(".rWheel").css({
+			"position" : "absolute",
+			"top" : "195px",
+			"left" : "520px"
+		});
+	}
+
+</script>
 </body>
 </html>

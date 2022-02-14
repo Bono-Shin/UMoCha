@@ -26,7 +26,7 @@
 		<table class="banner2">
 			<tbody>
 				<tr>
-					<td>광고2</td>
+					<td width="150px" height="180px"><a href="https://codingwpwp.tistory.com/"><img src="<%=request.getContextPath()%>/image/광고.png" alt="광고" width="150px" height="180px"></a></td>
 				</tr>
 			</tbody>
 		</table>

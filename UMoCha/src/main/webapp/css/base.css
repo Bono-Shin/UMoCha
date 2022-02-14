@@ -177,6 +177,12 @@ aside{
 	margin-top : 50px;
 }
 
+.banner2 img{
+	position : relative;
+	left : -3px;
+	top : -4px;
+}
+
 .banner3{
 	width : 150px;
 	height : 250px;
