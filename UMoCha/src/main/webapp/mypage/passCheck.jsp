@@ -63,6 +63,15 @@
 		top : 150px;
 		left : 150px;
 	}
+	
+	#pw{
+		width : 250px;
+		height : 35px;
+	}
+	
+	#pwb{
+		height : 40px;
+	}
 </style>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
@@ -70,8 +79,8 @@
 	<form method="post">
 		<div class="pcheck">
 			비밀번호 확인<br>
-			<input type="password" name="pass">
-			<input type="submit" value="확인" onclick="passOk(this);">
+			<input type="password" name="pass" id="pw">
+			<input type="submit" value="확인" onclick="passOk(this);" id="pwb">
 		</div>
 	</form>
 	<script>

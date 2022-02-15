@@ -31,7 +31,7 @@
 	<%			
 			}else if(headerLogin.getType().equals("D")){				
 	%>
-				<a href="">마이페이지</a>
+				<a href="<%=request.getContextPath()%>/mypage/dealerUserMypage.jsp">마이페이지</a>
 	<%		
 			}
 		}else{

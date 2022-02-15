@@ -10,6 +10,7 @@
 
 	String bidx = "";
 	String cname = "";
+	String img = "";
 	//rs2
 	String carimgsub = "";
 	String carimg = "";
@@ -72,7 +73,7 @@
 	ArrayList<String> arConve = new ArrayList<>();
 	ArrayList<String> arInfo = new ArrayList<>();
 	ArrayList<String> arTPrice = new ArrayList<>();
-	//rs5 - trim 개수
+	//rs5 - trim별 옵션 개수
 	ArrayList<String> artrimCnt = new ArrayList<>();
 	//rs6 - option
 	ArrayList<String> arOpt = new ArrayList<>();
@@ -95,6 +96,7 @@
 		if(rs.next()){
 			bidx = rs.getString("bidx");		
 			cname = rs.getString("cname");		
+			img = rs.getString("image");		
 		}
 		
 		sql = "select * from adminCar a join color c on a.cname=c.cname where a.cname = ?";
@@ -267,6 +269,19 @@
 	h2{
 		position : absolute;
 	}
+	
+	#carPreview{
+		position : absolute;
+		width : 400px;
+		height : 600px;
+		left : -450px;
+		top : -20px;
+		outline : 1px solid black;
+	}
+	
+	#carPreview hr{
+		margin-bottom : 20px;
+	}
 </style>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
@@ -342,13 +357,13 @@
 						if(i == 0){
 				%>
 					<label>
-						<input type="radio" name="trim" value="<%=trimNum++%>" checked onchange="choiceTrim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
+						<input type="radio" name="trim" value="<%=trimNum++%>" checked onchange="choiceTrim(this)" onclick="trim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
 					</label>
 				<%
 						}else{
 				%>
 					<label>
-						<input type="radio" name="trim" value="<%=trimNum++%>" onchange="choiceTrim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
+						<input type="radio" name="trim" value="<%=trimNum++%>" onchange="choiceTrim(this)" onclick="trim(this)"><%=arTrim.get(i)%> [<%=arTPrice.get(i) %>만원]
 					</label>
 				<%
 						}
@@ -360,6 +375,7 @@
 				<%
 					boolean optResult = true;
 					int optCnt = 0;
+					
 					for(int i=0; i<arTrim.size(); i++){
 						optResult = true;
 						optCnt = 0;
@@ -370,17 +386,20 @@
 				%>
 						<div>
 							<label>
-								<input type="checkbox" name="opt<%=j %>" onchange="optCheck(this)"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
+								<input type="checkbox" name="opt" onchange="optCheck(this)" value="<%=j%>" onclick="opt(this)"><%=arOName.get(j)%> [<%=arOPrice.get(j) %>만원]
+								<input type="hidden" value="<%=arOName.get(j)%>">
 							</label>
 						</div>
 				<%
 						}
+						
 						while(optResult){
 							optCnt++;
+							
 							arOpt.remove(0);
 							arOName.remove(0);
 							arOPrice.remove(0);
-								
+							
 							if(optCnt == Integer.parseInt(artrimCnt.get(i))){
 								optResult = false;
 							}
@@ -391,6 +410,18 @@
 					}
 				%>
 		</article>
+		<article id="carPreview">
+			<div><img src="<%=request.getContextPath()%>/image/<%=img%>" alt="<%=cname%>" width="400px"></div>
+			<hr>
+			<div>[색상] : <b><%=arcarpaintsub.get(0) %></b></div>
+			<hr>
+			<div>[트림] : <b><%=arTrim.get(0) %></b></div>
+			<hr>
+			<div>[옵션]</div>
+			<hr>
+			<div>차량 견적</div>
+			<div><%=arTPrice.get(0) %></div>
+		</article>
 	</section>
 	<script>
 		//색상 선택
@@ -400,6 +431,10 @@
 			console.log(value);
 			var a = $(".carColor").find("div:eq(0)").html(html);
 			console.log(a);
+			
+			//carPreview
+			html = "[색상] : <b>"+value+"</b>"; 
+			$("#carPreview").find("div:eq(1)").html(html);
 		}
 		
 		//휠 선택
@@ -438,6 +473,22 @@
 			}
 		}
 		
+		//트림 선택 - preview
+		function trim(obj){
+			//옵션 선택 초기화
+			optHtml = "[옵션]<br>"
+			
+			var trimNum = $(obj).val();
+			var html = "";
+			<%for(int i=0; i<arTrim.size(); i++){%>
+				if(trimNum == <%=i%>){
+					html = "[트림] : <b><%=arTrim.get(i)%></b>";
+				}
+			<%}%>
+			
+			$("#carPreview").find("div:eq(2)").html(html);
+		}
+		
 		//트림별 옵션 출력
 		var trimVal = $("input:radio[name='trim']:checked").val();
 		$("#"+trimVal+"").css("display","block");
@@ -459,23 +510,44 @@
 			%>
 		}
 		
-		var oCheck2 = $("input[name='opt2']").is(":checked");
-		var oCheck4 = $("input[name='opt4']").is(":checked");
 		//옵션 중복 선택 방지
 		function optCheck(obj){
 			var bidx = <%=bidx%>;
 			var tCheck = $("input[name='trim']:checked").val();
+			var value = $(obj).val();
 			
 			if(bidx == 1 && tCheck == 0){
+				if(value == 2){
+					$("input[name=opt]:eq(4)").prop("checked",false);
+				}
 				
+				if(value == 4){
+					$("input[name=opt]:eq(2)").prop("checked",false);
+				}
 			}
-			oCheck2 = $("input[name='opt2']").is(":checked");
-			oCheck4 = $("input[name='opt4']").is(":checked");
-			console.log(oCheck2);
-			console.log(oCheck4);
 		}
 		
-	
+		var optHtml = "[옵션]<br>";
+		//옵션 선택 - carPreview
+		function opt(obj){
+			var optVal = $(obj).next("input:hidden").val();
+			console.log(optVal);
+			
+			var bidx = <%=bidx%>;
+			var tCheck = $("input[name='trim']:checked").val();
+			
+			if($(obj).is(":checked")){
+				
+				optHtml += optVal+"<br>";
+				$("#carPreview").find("div:eq(3)").html(optHtml);	
+				
+			}else{
+				
+				optHtml = optHtml.replace(optVal+"<br>","");
+				$("#carPreview").find("div:eq(3)").html(optHtml);
+				
+			}
+		}
 		
 	</script>
 	<script>

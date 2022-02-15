@@ -2,8 +2,10 @@
     pageEncoding="UTF-8"%>
     
 <%@ page import = "UMoCha.*" %>
+
 <% Member insertCarLogin = (Member)session.getAttribute("loginUser"); %>
-    
+<% if(insertCarLogin != null){%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +61,6 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<% if(insertCarLogin != null){%>
 	<%@ include file = "/header.jsp" %>
 	<%@ include file = "/nav.jsp" %>
 	<section>

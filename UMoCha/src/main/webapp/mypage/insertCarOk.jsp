@@ -9,7 +9,7 @@
 
 <%
 	//이미지 받기 위한 준비1
-	String directory = "C:/Users/신동환/Desktop/개발/git/UMoCha/UMoCha/src/main/webapp/image"; //저장경로
+	String directory = "C:/Users/311/git/UMoCha/UMoCha/src/main/webapp/image"; //저장경로
 	int imgSize = 100*1024*1024; //사이즈
 	
 	String carimgsub ="";

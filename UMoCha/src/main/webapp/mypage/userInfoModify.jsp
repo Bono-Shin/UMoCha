@@ -102,6 +102,17 @@
 		width : 150px;
 		height : 50px;
 	}
+	
+	.sp{
+		color : red;
+		font-size : 0.6em;
+		position : absolute;
+	}
+	
+	.mInfo{
+		width : 250px;
+		height : 35px;
+	}
 </style>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.min.js"></script>
 </head>
@@ -112,43 +123,118 @@
 	<section>
 	<%@ include file = "/aside.jsp" %>
 	<%@ include file = "/userAsideLeft.jsp" %>
-		<form>
+		<form method="post" action="infoUpdate.jsp">
 			<article>
 				<div id="userInfo">
 					<div class="infoSubD">
 						[아이디]<br>
-						<input type="text" name="id" value="<%=arUser.get(0)%>" disabled>
+						<input type="text" name="id" value="<%=arUser.get(0)%>" disabled class="mInfo">
+						<input type="hidden" name="midx" value="<%=midx%>">
 					</div>
 					<div class="infoSubD">
 						[비밀번호]<br>
-						<input type="password" name="pass">
+						<input type="password" name="pass" class="mInfo"><br>
+						<span class="sp"></span>
 					</div>
 					<div class="infoSubD">
 						[이름]<br>
-						<input type="text" name="name" value="<%=arUser.get(1)%>" disabled>
+						<input type="text" name="name" value="<%=arUser.get(1)%>" disabled class="mInfo">
 					</div>
 					<div class="infoSubD">
 						[주소]<br>
-						<input type="text" name="addr" value="<%=arUser.get(2)%>">
+						<input type="text" name="addr" value="<%=arUser.get(2)%>" class="mInfo"><br>
+						<span class="sp"></span>
 					</div>
 					<div class="infoSubD">
 						[연락처]<br>
-						<input type="text" name="phone" value="<%=arUser.get(3)%>">
+						<input type="text" name="phone" value="<%=arUser.get(3)%>" maxlength="11" placeholder="'-'빼고 입력해 주세요." class="mInfo"><br>
+						<span class="sp"></span>
 					</div>
 					<div class="infoSubD">
 						[E-Mail]<br>
-						<input type="text" name="email" value="<%=arUser.get(4)%>">
+						<input type="text" name="email" value="<%=arUser.get(4)%>" class="mInfo"><br>
+						<span class="sp"></span>
 					</div>
 					<div>
-						<input type="button" value="저장" class="infoModi" onclick="modi(this)">
+						<input type="submit" value="저장" class="infoModi" onclick="infoModi(); return false;">
 					</div>
 				</div>
 			</article>
 		</form>
 	</section>
 	<script>
-		function modi(obj){
-			window.open("<%=request.getContextPath()%>/mypage/passCheck.jsp","비밀번호 확인","width=500px, height=400px, left=750px, top=270px, scrollbars=no, resizable=yes");
+		var resultPass = true;
+		var resultAddr = true;
+		var resultPhone = true;
+		var resultEmail = true;
+		
+		function infoModi(){
+			//비밀번호
+			reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,}$/;
+			value = $("input[name='pass']").val();
+			if(value == ""){
+				resultPass = false;
+			var html = "필수 입력 사항"
+				$("input[name='pass']").next().next("span").html(html);
+			}else if(!(reg.test(value))){
+				resultPass = false;
+				html = "알파벳+숫자+특수문자(최소 4자리)"
+				$("input[name='pass']").next().next("span").html(html).css("color","red");
+			}else if(reg.test(value)){
+				resultPass = true;
+				html = "사용 가능한 비밀번호 입니다."
+				$("input[name='pass']").next().next("span").html(html).css("color","green");
+			}
+			
+			//주소
+			value = $("input[name='addr']").val();
+			
+			if(value == ""){
+				resultAddr = false;
+				html = "필수 입력 사항"
+				$("input[name='addr']").next().next("span").html(html);
+			}else{
+				resultAddr = true;
+				$("input[name='addr']").next().next("span").html("");
+			}
+			
+			//연락처
+			reg = /^[0-9]*$/;
+			value = $("input[name='phone']").val();
+			
+			if(value == ""){
+				resultPhone = false;
+				html = "필수 입력 사항"
+				$("input[name='phone']").next().next("span").html(html);
+			}else if(!(reg.test(value))){
+				resultPhone = false;
+				html = "숫자만 사용가능"
+				$("input[name='phone']").next().next("span").html(html);
+			}else{
+				resultPhone = true;
+				$("input[name='phone']").next().next("span").html("");
+			}
+			
+			//email
+			reg = /^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
+			value = $("input[name='email']").val();
+			
+			if(value == ""){
+				resultEmail = false;
+				html = "필수 입력 사항"
+				$("input[name='email']").next().next("span").html(html);
+			}else if(!(reg.test(value))){
+				resultEmail = false;
+				html = "email 형식이 다릅니다."
+				$("input[name='email']").next().next("span").html(html);
+			}else{
+				resultEmail = true;
+				$("input[name='email']").next().next("span").html("");
+			}
+			
+			if(resultPass && resultAddr && resultPhone && resultEmail){
+				document.frm.submit();
+			}
 		}
 	</script>
 </body>
