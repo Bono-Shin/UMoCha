@@ -194,6 +194,10 @@
 	.bb{
 		color : blue;
 	}
+	
+	table{
+		border-collapse : collapse;
+	}
 </style>
 </head>
 <body>

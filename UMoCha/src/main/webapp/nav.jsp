@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import = "UMoCha.*" %>
+<% Member counselUserLogin = (Member)session.getAttribute("loginUser"); %>
 
 <nav>
 	<div class="carMaker">
@@ -21,7 +24,16 @@
 			</dl>
 		</div>
 	</div>
-	<div class="counseling">
+	<div class="counseling" onclick="counsel()">
 		상담
 	</div>
 </nav>
+<script>
+	function counsel(){
+		<%if(counselUserLogin != null && counselUserLogin.getType().equals("N")){%>
+			location.href="<%=request.getContextPath()%>/mypage/consultList.jsp"
+		<%}else{%>
+			alert("로그인이 필요한 서비스 입니다.");
+		<%}%>
+	}
+</script>

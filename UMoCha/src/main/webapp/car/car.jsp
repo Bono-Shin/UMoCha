@@ -12,6 +12,7 @@
 	String bidx = "";
 	String cname = "";
 	String img = "";
+	String make = "";
 	//rs2
 	String carimgsub = "";
 	String carimg = "";
@@ -98,6 +99,7 @@
 			bidx = rs.getString("bidx");		
 			cname = rs.getString("cname");		
 			img = rs.getString("image");		
+			make = rs.getString("make");		
 		}
 		
 		sql = "select * from adminCar a join color c on a.cname=c.cname where a.cname = ?";
@@ -447,7 +449,11 @@
 		</article>
 		<form>
 			<article id="carPreview">
-				<div><img src="<%=request.getContextPath()%>/image/<%=img%>" alt="<%=cname%>" width="400px"></div>
+				<div>
+					<img src="<%=request.getContextPath()%>/image/<%=img%>" alt="<%=cname%>" width="400px">
+					<input type="hidden" name="cname" value="<%=cname%>">
+					<input type="hidden" name="make" value="<%=make%>">
+				</div>
 				<hr>
 				<div>
 					[색상] : <b><%=arcarpaintsub.get(0) %></b>
@@ -467,9 +473,9 @@
 				<div class="previewDiv">차량 견적 : </div>
 				<div class="previewDiv">
 					<b><%=arTPrice.get(0) %>만원</b>
-					<input type="hidden" value="<%=arTPrice.get(0) %>">
+					<input type="hidden" name="carPrice" value="<%=arTPrice.get(0) %>">
 				</div>
-				<%if(nUserLogin != null){ %>
+				<%if(nUserLogin != null && nUserLogin.getType().equals("N")){ %>
 				<div><input type="button" value="상담 신청" class="consulting" onclick="consul()"></div>
 				<%} %>
 			</article>
@@ -534,11 +540,17 @@
 		//트림 선택 - preview
 		function trim(obj){
 			//옵션 선택 초기화
-			optHtml = "[옵션]<br><input type='hidden' name='carOpt'>"
+			optHtml = "[옵션]<br><input type='hidden' name='carOpt'>";
 			$("#carPreview").find("div:eq(3)").html(optHtml);
 			
 			//체크박스 초기화
 			$("input[type=checkbox]").prop("checked",false);
+			
+			//옵션 밸류 초기화
+			optHVal = "";
+			
+			//옵션 개수 초기화
+			oCnt = 0
 			
 			var trimNum = $(obj).val();
 			var html = "";
@@ -547,11 +559,11 @@
 					html = "[트림] : <b><%=arTrim.get(i)%></b><input type='hidden' name='carTrim' value='<%=arTrim.get(i)%>'>";
 					//트림 가격 초기화
 					optPrice = parseInt("<%=arTPrice.get(i) %>");
-					optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' value='<%=arTPrice.get(i) %>'>";
+					optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='<%=arTPrice.get(i) %>'>";
 					$("#carPreview").find("div:eq(5)").html(optPrice2);
 				}
 			<%}%>
-			
+		
 			$("#carPreview").find("div:eq(2)").html(html);
 		}
 		
@@ -593,9 +605,15 @@
 			}
 		}
 		
-		var optHtml = "[옵션]<br>";
+		//옵션 개수
+		var oCnt = 0;
+		//옵션 목록
+		var optHtml = "[옵션]<br><input type='hidden' name='carOpt'>";
+		//옵션 가격
 		var optPrice = parseInt("<%=arTPrice.get(0) %>");
 		var optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' value='<%=arTPrice.get(0) %>'>";
+		//옵션 밸류
+		var optHVal = "";
 		//옵션 선택 - carPreview
 		function opt(obj){
 			var optVal = $(obj).next("input:hidden").val();
@@ -627,13 +645,23 @@
 						$("#carPreview").find("div:eq(3)").html(optHtml);
 						
 						optPrice = optPrice + optPriceVal;
-						optPrice2 = "<b>"+optPrice+"만원</b>";
+						optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 						$("#carPreview").find("div:eq(5)").html(optPrice2);
+						
+						optHVal = optHVal + $(obj).next().val() + ",";
+						$("#carPreview").find("input[name='carOpt']").val(optHVal);
+						
+						oCnt++;
 						
 						if(opt4check){
 							optPrice = optPrice - price4;
-							optPrice2 = "<b>"+optPrice+"만원</b>";
+							optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 							$("#carPreview").find("div:eq(5)").html(optPrice2);
+							
+							optHVal = optHVal.replace(value4+",", "");
+							$("#carPreview").find("input[name='carOpt']").val(optHVal);
+							
+							oCnt--;
 						}
 					}else if(checkVal == 4){
 						optHtml = optHtml.replace(value2+"<br>","");
@@ -641,29 +669,49 @@
 						$("#carPreview").find("div:eq(3)").html(optHtml);
 						
 						optPrice = optPrice + optPriceVal;
-						optPrice2 = "<b>"+optPrice+"만원</b>";
+						optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 						$("#carPreview").find("div:eq(5)").html(optPrice2);
+						
+						optHVal = optHVal + $(obj).next().val() + ",";
+						$("#carPreview").find("input[name='carOpt']").val(optHVal);
+						
+						oCnt++;
 						
 						if(opt2check){
 							optPrice = optPrice - price2;
-							optPrice2 = "<b>"+optPrice+"만원</b>";
+							optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 							$("#carPreview").find("div:eq(5)").html(optPrice2);
+							
+							optHVal = optHVal.replace(value2+",", "");
+							$("#carPreview").find("input[name='carOpt']").val(optHVal);
+							
+							oCnt--;
 						}
 					}else{
 						optHtml += optVal+"<br>";
 						$("#carPreview").find("div:eq(3)").html(optHtml);
 						
 						optPrice = optPrice + optPriceVal;
-						optPrice2 = "<b>"+optPrice+"만원</b>";
+						optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 						$("#carPreview").find("div:eq(5)").html(optPrice2);
+						
+						optHVal = optHVal + $(obj).next().val() + ",";
+						$("#carPreview").find("input[name='carOpt']").val(optHVal);
+						
+						oCnt++;
 					}
 				}else{
 					optHtml = optHtml.replace(optVal+"<br>","");
 					$("#carPreview").find("div:eq(3)").html(optHtml);
 					
 					optPrice = optPrice - optPriceVal;
-					optPrice2 = "<b>"+optPrice+"만원</b>";
+					optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 					$("#carPreview").find("div:eq(5)").html(optPrice2);
+					
+					optHVal = optHVal.replace($(obj).next().val()+",", "");
+					$("#carPreview").find("input[name='carOpt']").val(optHVal);
+					
+					oCnt--;
 				}
 			}else{
 				if($(obj).is(":checked")){
@@ -671,15 +719,26 @@
 					$("#carPreview").find("div:eq(3)").html(optHtml);
 					
 					optPrice = optPrice + optPriceVal;
-					optPrice2 = "<b>"+optPrice+"만원</b>";
+					optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 					$("#carPreview").find("div:eq(5)").html(optPrice2);
+					
+					optHVal = optHVal + $(obj).next().val() + ",";
+					$("#carPreview").find("input[name='carOpt']").val(optHVal);
+					
+					oCnt++;
+					
 				}else{
 					optHtml = optHtml.replace(optVal+"<br>","");
 					$("#carPreview").find("div:eq(3)").html(optHtml);
 					
 					optPrice = optPrice - optPriceVal;
-					optPrice2 = "<b>"+optPrice+"만원</b>";
+					optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='"+optPrice+"'>";
 					$("#carPreview").find("div:eq(5)").html(optPrice2);
+					
+					optHVal = optHVal.replace($(obj).next().val()+",", "");
+					$("#carPreview").find("input[name='carOpt']").val(optHVal);
+					
+					oCnt--;
 				}
 			}
 		}
@@ -719,13 +778,22 @@
 		
 		var trimNum = $("input[name='trim']:checked").val();
 		console.log(trimNum);
+		
+		//트림 가격 초기화
 		<%for(int i=0; i<arTrim.size(); i++){%>
 		if(trimNum == <%=i%>){
 			optPrice = parseInt("<%=arTPrice.get(i) %>");
-			optPrice2 = "<b>"+optPrice+"만원</b>";
+			optPrice2 = "<b>"+optPrice+"만원</b><input type='hidden' name='carPrice' value='<%=arTPrice.get(i) %>'>";
 			$("#carPreview").find("div:eq(5)").html(optPrice2);
 		}
-	<%}%>
+		<%}%>
+		//옵션 목록 초기화
+		optHVal = "";
+		optHtml = "[옵션]<br><input type='hidden' name='carOpt'>";
+		$("#carPreview").find("div:eq(3)").html(optHtml);
+		
+		//옵션 개수 초기화
+		oCnt = 0
 	}
 	
 	function trimView(){
@@ -733,7 +801,23 @@
 	}
 	
 	function consul(){
+		confirm("상담 신청을 하시겠습니까?");
 		
+		var conHtml = "<input type='hidden' name='oCnt' value='"+oCnt+"'>"
+		$("form").append(conHtml);
+		
+		if(confirm){
+			$.ajax({
+				url : "consult.jsp",
+				type : "post",
+				data : $("form").serialize(),
+				success : function(data){
+					if(data.trim() > 0){
+						location.href="<%=request.getContextPath()%>/index.jsp";
+					}
+				}
+			});
+		}
 	}
 </script>
 </body>

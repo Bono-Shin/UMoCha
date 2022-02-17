@@ -50,6 +50,10 @@ header{
 	left : 380px;
 }
 
+.counseling:hover{
+	cursor : pointer;
+}
+
 nav{
 	width : 900px;
 	margin : auto;
@@ -225,6 +229,10 @@ aside{
 }
 
 .loginB>a:hover{
+	cursor : pointer;
+}
+
+#aside button:hover{
 	cursor : pointer;
 }
 
