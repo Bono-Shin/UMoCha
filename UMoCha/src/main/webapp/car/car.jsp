@@ -345,7 +345,7 @@
 				<label>
 					<input type="radio" name="color" onclick="colorFn(this)">
 					<img src="<%=request.getContextPath()%>/image<%=arcarpaint.get(i)%>" alt="<%=arcarpaintsub.get(i)%>" class="carImg" title="<%=arcarpaintsub.get(i)%>">
-					<input type="hidden" value="<%=arcarpaintsub.get(i)%>">
+					<input type="hidden" value="<%=arcarimg.get(i)%>">
 					<input type="hidden" value="<%=i%>">
 				</label>
 			<%
@@ -485,16 +485,17 @@
 		//색상 선택
 		function colorFn(obj){
 			var value = $(obj).next().next().val();
-			var html = "<img src='<%=request.getContextPath()%>/image/"+value+"' alt='"+value+"' width='800px'>";
-			console.log(value);
+			var html = "<img src='<%=request.getContextPath()%>/image"+value+"' alt='"+value+"' width='800px'>";
+			
 			var a = $(".carColor").find("div:eq(0)").html(html);
 			console.log(a);
 			
 			//carPreview
 			var valueNum = $(obj).next().next().next().val();
-			html = "[색상] : <b>"+value+"</b>"; 
+			
 			<%for(int i=0; i<arcarpaint.size(); i++){%>
 			if(valueNum == <%=i%>){
+				html = "[색상] : <b><%=arcarpaintsub.get(i) %></b>"; 
 				html += "<input type='hidden' name='carColor' value='<%=arcarpaintsub.get(i) %>'>";
 			}
 			<%}%>
