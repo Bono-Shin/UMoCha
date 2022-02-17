@@ -102,7 +102,7 @@
 			make = rs.getString("make");		
 		}
 		
-		sql = "select * from adminCar a join color c on a.cname=c.cname where a.cname = ?";
+		sql = "select * from color where cname = ?";
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -336,7 +336,7 @@
 				<label>
 					<input type="radio" name="color" onclick="colorFn(this)" checked>
 					<img src="<%=request.getContextPath()%>/image<%=arcarpaint.get(i)%>" alt="<%=arcarpaintsub.get(i)%>" class="carImg" title="<%=arcarpaintsub.get(i)%>">
-					<input type="hidden" value="<%=arcarpaintsub.get(i)%>">
+					<input type="hidden" value="<%=arcarimg.get(i)%>">
 					<input type="hidden" value="<%=i%>">
 				</label>
 			<%
@@ -485,7 +485,7 @@
 		//색상 선택
 		function colorFn(obj){
 			var value = $(obj).next().next().val();
-			var html = "<img src='<%=request.getContextPath()%>/image/"+value+".jpg' alt='+value+' width='800px'>";
+			var html = "<img src='<%=request.getContextPath()%>/image/"+value+"' alt='"+value+"' width='800px'>";
 			console.log(value);
 			var a = $(".carColor").find("div:eq(0)").html(html);
 			console.log(a);
