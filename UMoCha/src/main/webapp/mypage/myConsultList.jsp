@@ -9,12 +9,12 @@
 <% if(UserLogin != null){%>
 
 <%
-	int midx = 0;
+	String midx = request.getParameter("midx");
 	String cname = "";
 	String make = "";
 	String id = "";
 	
-	ArrayList<Integer> arMidx = new ArrayList<>();
+	ArrayList<String> arMidx = new ArrayList<>();
 	ArrayList<String> arCname = new ArrayList<>();
 	ArrayList<String> arMake = new ArrayList<>();
 	ArrayList<String> arId = new ArrayList<>();
@@ -32,14 +32,14 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(url,user,userPass);
 		
-		String sql = "select * from consult c, member m where c.midx = m.midx and m.delYN = 'n'";
+		String sql = "select * from consult c, member m where c.midx = m.midx and m.delYN = 'n' and c.midx = "+midx;
 		
 		psmt = conn.prepareStatement(sql);
 		
 		rs = psmt.executeQuery();
 		
 		while(rs.next()){
-			midx = UserLogin.getMidx();
+			midx = String.valueOf(UserLogin.getMidx());
 			arMidx.add(midx);
 			
 			cname = rs.getString("cname");
@@ -71,7 +71,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유모차[당신이 찾는 모든 차]-상담리스트</title>
+<title>유모차[당신이 찾는 모든 차]-나의 상담리스트</title>
 <link href="<%=request.getContextPath()%>/css/base.css" rel="stylesheet">
 <style>
 	#consultTable{
@@ -111,7 +111,7 @@
 	<section>
 		<%@ include file = "/aside.jsp" %>
 		<article id="consultArticle">
-			<h3>상담 리스트</h3>
+			<h3>나의 상담 리스트</h3>
 			<hr>
 		</article>
 		<article>

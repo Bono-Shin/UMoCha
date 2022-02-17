@@ -59,7 +59,7 @@
 		<article id="nUserTit"><div><h2>마이페이지</h2></div></article>
 		<article id="nUserAt">
 			<div onclick="location.href='<%=request.getContextPath()%>/mypage/normalUserInfo.jsp'">내 정보 보기</div>
-			<div onclick="location.href='<%=request.getContextPath()%>/mypage/#'">내 상담 내역</div>
+			<div onclick="location.href='<%=request.getContextPath()%>/mypage/myConsultList.jsp?midx=<%=nUserLogin.getMidx()%>'">내 상담 내역</div>
 		</article>
 	</section>
 </body>
