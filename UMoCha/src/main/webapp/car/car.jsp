@@ -535,6 +535,18 @@
 					"top" : "195px",
 					"left" : "520px"
 				});
+			}else if(bidx == 3){
+				$(".fWheel").css({
+					"position" : "absolute",
+					"top" : "190px",
+					"left" : "120px"
+				});
+					
+				$(".rWheel").css({
+					"position" : "absolute",
+					"top" : "195px",
+					"left" : "550px"
+				});
 			}
 		}
 		
@@ -771,6 +783,19 @@
 			"position" : "absolute",
 			"top" : "195px",
 			"left" : "520px"
+		});
+	}
+	else if(bidx == 3){
+		$(".fWheel").css({
+			"position" : "absolute",
+			"top" : "190px",
+			"left" : "120px"
+		});
+			
+		$(".rWheel").css({
+			"position" : "absolute",
+			"top" : "195px",
+			"left" : "550px"
 		});
 	}
 
