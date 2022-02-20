@@ -110,6 +110,7 @@
 	<%@ include file = "/nav.jsp" %>
 	<section>
 		<%@ include file = "/aside.jsp" %>
+		<%@ include file = "/userAsideLeft.jsp" %>
 		<article id="consultArticle">
 			<h3>나의 상담 리스트</h3>
 			<hr>
