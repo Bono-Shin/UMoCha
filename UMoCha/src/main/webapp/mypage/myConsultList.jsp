@@ -9,12 +9,12 @@
 <% if(UserLogin != null){%>
 
 <%
-	String midx = request.getParameter("midx");
+	int midx = UserLogin.getMidx();
 	String cname = "";
 	String make = "";
 	String id = "";
 	
-	ArrayList<String> arMidx = new ArrayList<>();
+	ArrayList<Integer> arMidx = new ArrayList<>();
 	ArrayList<String> arCname = new ArrayList<>();
 	ArrayList<String> arMake = new ArrayList<>();
 	ArrayList<String> arId = new ArrayList<>();
@@ -39,7 +39,7 @@
 		rs = psmt.executeQuery();
 		
 		while(rs.next()){
-			midx = String.valueOf(UserLogin.getMidx());
+			midx = rs.getInt("midx");
 			arMidx.add(midx);
 			
 			cname = rs.getString("cname");
@@ -116,7 +116,7 @@
 			<hr>
 		</article>
 		<article>
-		<%if(arMidx.size() > 0){ %>
+		<%if(arCname.size() > 0){%>
 			<table id="consultTable" border="1">
 				<thead>
 					<tr>

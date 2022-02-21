@@ -839,7 +839,7 @@
 				data : $("form").serialize(),
 				success : function(data){
 					if(data.trim() > 0){
-						location.href="<%=request.getContextPath()%>/index.jsp";
+						location.href="<%=request.getContextPath()%>/mypage/myConsultList.jsp";
 					}
 				}
 			});
